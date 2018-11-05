@@ -25,9 +25,6 @@ public:
 
 private:
     bool open;
-    bool tableDe;
-    bool tableNum;
-    bool menuDe;
     std::vector<Table*> tables;
     std::vector<Dish> menu;
     std::vector<BaseAction*> actionsLog;

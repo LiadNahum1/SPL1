@@ -3,6 +3,8 @@
 //
 #include <iostream>
 #include "../include/Restaurant.h"
+#include <fstream>
+
 using namespace std;
 
 
@@ -10,6 +12,10 @@ Restaurant::Restaurant(const std::string &configFilePath) {start(); }
 void Restaurant::start() {
     int numTables = 0;
     int dishNum = 0;
+    bool tableDe = false;
+    bool tableNum = false;
+    bool menuDe = false;
+    ifstream input( configFilePath );
     for( std::string line; getline( input, line ); ){
 
         if(tableDe & line != "") {
@@ -22,7 +28,7 @@ void Restaurant::start() {
         }
         if(menuDe & line != "") {
             DishType ty;//check if is the right way
-            String dish []  = line.split(",");
+            string dish []  = line.split(",");
             if(dish[2] == "VEG")
                 ty = VEG;
             if(dish[2] == "SPC")
@@ -45,8 +51,8 @@ void Restaurant::start() {
     }
 }
 void Restaurant::openTable(std::string input , int tableNum) { //dane
-    int tableSize;  = atoi(line.c_str());
-    String nums [] = input.split(",");
+    int tableSize  = atoi(input.c_str());
+    string nums [] = input.split(",");
     for (int i = 0; i < nums.lenght; i++) { //this will create tables
         tableSize  = atoi(nums[i].c_str());
         tables.push_back( new Table(tableSize));
