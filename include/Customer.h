@@ -9,6 +9,7 @@
 #include <vector>
 #include <string>
 #include "Dish.h"
+using namespace std;
 
 class Customer{
 public:
@@ -49,6 +50,8 @@ public:
     std::string toString() const;
 private:
     bool orderOnce;
+    void firstOrder(const std::vector<Dish> &menu, vector<int> &orderId);
+    void nextOrders(const std::vector<Dish> &menu, vector<int> &orderId);
 };
 
 
@@ -59,7 +62,7 @@ public:
     std::string toString() const;
 
 private:
-    bool orderOnce;
+    int prevPrice;
 };
 
 

@@ -10,7 +10,7 @@ using namespace std;
 VegetarianCustomer :: VegetarianCustomer(std::string name, int id): Customer(name, id){}
 
 std::vector<int> VegetarianCustomer :: order(const std::vector<Dish> &menu){
-    vector<int> orders(2); // assign two orders
+    vector<int> orders;
     //vegetarian dish with the smallest id in the menu
     int minId(-1);
     bool findFirstVeg(false);
@@ -51,13 +51,13 @@ std::vector<int> VegetarianCustomer :: order(const std::vector<Dish> &menu){
                 }
             }
         }
-        orders.push_back(id);
+        if(findFirstBev)
+            orders.push_back(id);
     }
     return orders;
 }
 std::string VegetarianCustomer :: toString() const{
-    string customerDetails = Customer :: toString();
-    customerDetails = customerDetails +"/n" + "Orders: ";
+    return getName() + "," + "veg";
 
 
 }

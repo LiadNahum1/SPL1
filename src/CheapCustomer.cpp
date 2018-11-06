@@ -8,7 +8,7 @@ using namespace std;
 
 CheapCustomer :: CheapCustomer(std::string name, int id): Customer(name, id), orderOnce(false){}
 std::vector<int> CheapCustomer :: order(const std::vector<Dish> &menu) {
-    vector<int> orderId(1);
+    vector<int> orderId;
     if (!orderOnce) {
         int cheapestIdOrder(menu[0].getId());
         int cheapestPrice(menu[0].getPrice());
@@ -24,5 +24,5 @@ std::vector<int> CheapCustomer :: order(const std::vector<Dish> &menu) {
 
 }
 std::string CheapCustomer :: toString() const{
-
+    return getName() + "," + "chp";
 }
