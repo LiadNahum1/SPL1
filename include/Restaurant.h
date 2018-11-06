@@ -33,7 +33,7 @@ private:
     bool open;
     std::vector<Table*> tables;
     std::vector<Dish> menu;
-    std::vector<BaseAction*> actionsLog
+    std::vector<BaseAction*> actionsLog;
     void openTable(std::string a , int tableNum);
 };
 
