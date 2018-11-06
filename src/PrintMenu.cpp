@@ -13,7 +13,9 @@ void PrintMenu :: act(Restaurant &restaurant) {
         cout << menu.at(i).getName() + " " ;
         cout << menu.at(i).getType() + " " ;
         cout << menu.at(i).getPrice() + "NIS" << endl;
-
     }
 }
-std::string PrintMenu :: toString() const{}
+std::string PrintMenu :: toString() const {
+    return "PrintMenu Completed" ;
+
+}

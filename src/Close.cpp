@@ -15,8 +15,19 @@ void Close :: act(Restaurant &restaurant)
     }
     else
     {
+        cout << "Table "<< tableId << " was closed. Bill " << table->getBill() <<"NIS" <<endl;
         table->closeTable();
+        complete();
     }
+
 }
 std::string Close :: toString() const{
+    std:string output = "close " + std::to_string(tableId) + " ";
+    if( getStatus() == COMPLETED){
+        output = output + "Completed";
+    }
+    if(getStatus() == ERROR){
+        output = output + getErrorMsg();
+    }
+    return output;
 }

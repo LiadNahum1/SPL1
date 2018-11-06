@@ -70,7 +70,15 @@ void Table :: order(const std::vector<Dish> &menu){
     }
 }
 void Table :: openTable(){open = true;}
-void Table :: closeTable(){open = false;}
+void Table :: closeTable(){
+    open = false;
+ //TODO should i erase the pointers themselves ?
+        
+   customersList.clear();
+   orderList.clear();
+}
+
+
 int Table :: getBill(){
     int bill(0);
     for (int i = 0; i < orderList.size(); ++i) {

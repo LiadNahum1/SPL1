@@ -36,7 +36,17 @@ void MoveCustomer :: act(Restaurant &restaurant){
             if (tableSrc->getCustomers().size() == 0) { //empty table
                 tableSrc->closeTable();
             }
+            complete();
         }
     }
 }
-std::string toString() const{}
+std::string MoveCustomer :: toString() const{
+    std:string output = "MoveCustomer" + std::to_string(srcTable) + " " + std::to_string(dstTable)+ " " + std::to_string(id) + " ";
+    if( getStatus() == COMPLETED){
+        output = output + "Completed";
+    }
+    if(getStatus() == ERROR){
+        output = output + getErrorMsg();
+    }
+
+}

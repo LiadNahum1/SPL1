@@ -9,6 +9,58 @@ using namespace std;
 
 
 Restaurant::Restaurant(const std::string &configFilePath) {start(); }
+//copy constructor
+Restaurant :: Restaurant(const Restaurant & other) : open(other.open), menu(other.menu) {
+    for (int i = 0; i < other.getNumOfTables(); ++i) {
+        tables.push_back(new Table(* other.getTable(i)));
+    }
+    for (int i = 0; i < other.getActionsLog().size(); ++i) {
+        actionsLog.push_back(other.getActionsLog().at(i)-> clone()); //TODO
+    }
+}
+//destruction
+ Restaurant :: ~Restaurant(){
+    menu.clear();
+     for (int i = 0; i < tables.size(); ++i) {
+         delete tables.at(i);
+     }
+     tables.clear();
+     for (int j = 0; j < actionsLog.size(); ++j) {
+         delete actionsLog.at(i);
+     }
+     actionsLog.clear();
+
+}
+//copy = operator
+Restaurant & Restaurant ::operator=(const Restaurant &other){
+    if(this != &other){
+        open = other.open;
+        menu = other.menu;
+        for (int i = 0; i < tables.size(); ++i) {
+            delete tables.at(i);
+        }
+        tables.clear();
+        for (int j = 0; j < actionsLog.size(); ++j) {
+            delete actionsLog.at(i);
+        }
+        actionsLog.clear();
+
+        for (int i = 0; i < other.getNumOfTables(); ++i) {
+            tables.push_back(new Table(* other.getTable(i)));
+        }
+        for (int i = 0; i < other.getActionsLog().size(); ++i) {
+            actionsLog.push_back(other.getActionsLog().at(i)-> clone()); //TODO
+        }
+    }
+}
+//move constructor
+Restaurant :: Restaurant(Restaurant && other): open(other.open), menu(other.menu), tables(other.tables), actionsLog(other.actionsLog){
+    other.tables.clear();
+    other.actionsLog.clear();
+}
+Restaurant & Restaurant :: operator=(Restaurant && other){
+
+}
 void Restaurant::start() {
     int numTables = 0;
     int dishNum = 0;
@@ -58,7 +110,7 @@ void Restaurant::openTable(std::string input , int tableNum) { //dane
         tables.push_back( new Table(tableSize));
     }
 }
-Table* Restaurant::getTable(int ind){
+Table* Restaurant::getTable(int ind) const{ //TODO const thing
     return tables[ind];//dane
 }
 
@@ -68,4 +120,3 @@ const std::vector<BaseAction *> & Restaurant::getActionsLog() const { return act
 
 std::vector<Dish> & Restaurant::getMenu() { return menu;}//dane
 
-}
