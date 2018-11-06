@@ -9,8 +9,7 @@ using namespace std;
 
 
 Restaurant::Restaurant(const std::string &configFilePath):open(true)
-{
-    int numTables = 0;
+{   int numTables = 0;
     int dishNum = 0;
     bool tableDe = false;
     bool tableNum = false;
@@ -20,16 +19,16 @@ Restaurant::Restaurant(const std::string &configFilePath):open(true)
     string line;
     while(std::getline(nameFileout, line))
     {
-        if(tableDe & line != "") {
+        if(tableDe & !line.empty()) {
         openTable(line , numTables);
         tableDe = false;
         }
-        if(tableNum & line != "") {
+        if(tableNum & !line.empty()) {
         numTables = atoi(line.c_str());
         tableNum = false;
         }
-        if(menuDe & line != "") {
-        DishType ty;//check if is the right way
+        if(menuDe & !line.empty()) {
+        DishType ty();//check if is the right way
         string dish []  = line.split(",");
         if(dish[2] == "VEG")
             ty = VEG;
@@ -55,8 +54,10 @@ Restaurant::Restaurant(const std::string &configFilePath):open(true)
 void Restaurant::start() {
 }
 void Restaurant::openTable(std::string input , int tableNum) { //dane
-    int tableSize  = atoi(input.c_str());
-    string nums [] = input.split(",");
+    std::vector<std::string> v;
+
+    split( "This  is a  test", v, "," );
+    dump( cout, v );
     for (int i = 0; i < nums.lenght; i++) { //this will create tables
         tableSize  = atoi(nums[i].c_str());
         tables.push_back( new Table(tableSize));

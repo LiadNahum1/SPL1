@@ -16,30 +16,30 @@ enum ActionStatus{
 //Forward declaration
 class Restaurant;
 
-class BaseAction{
+class BaseAction{ //dane
 public:
-    BaseAction();//to do
-    ActionStatus getStatus() const; //
-    virtual void act(Restaurant& restaurant)=0;//
-    virtual std::string toString() const=0;//
+    BaseAction();
+    ActionStatus getStatus() const;
+    virtual void act(Restaurant& restaurant)=0;
+    virtual std::string toString() const=0;
 protected:
-    void complete(); //
-    void error(std::string errorMsg); //
-    std::string getErrorMsg() const; //
+    void complete();
+    void error(std::string errorMsg);
+    std::string getErrorMsg() const;
 private:
-    std::string errorMsg;//
-    ActionStatus status;//
+    std::string errorMsg;
+    ActionStatus status;
 };
 
 
-class OpenTable : public BaseAction {
+class OpenTable : public BaseAction { //dane
 public:
-    OpenTable(int id, std::vector<Customer *> &customersList);//
-    void act(Restaurant &restaurant);//
-    std::string toString() const;//
+    OpenTable(int id, std::vector<Customer *> &customersList);
+    void act(Restaurant &restaurant);
+    std::string toString() const;
 private:
-    const int tableId;//
-    const std::vector<Customer *> customers;//
+    const int tableId;
+    const std::vector<Customer *> customers;
 };
 
 
