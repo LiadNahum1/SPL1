@@ -4,6 +4,7 @@
 
 #include "../include/Action.h"
 #include "../include/Table.h"
+using namespace std;
 OpenTable::OpenTable(int id, std::vector<Customer *> &customersList) : tableId(id),customers(customersList) {
     error("Table does not exist or is already open");
 }
@@ -16,6 +17,7 @@ else{
         t->addCustomer(customers[i]);
     }
     t->openTable();
+    std::cout <<this->toString();
 }
 }
 std::string OpenTable::toString() const {
@@ -24,5 +26,5 @@ std::string OpenTable::toString() const {
     for(int i = 0; i<customers.size(); i++){
         output = output + customers[i]->toString() + ",";
     }
-    output = output.//to substring
+    output.substr(0,output.size()-2);
 }
