@@ -35,8 +35,8 @@ private:
 class OpenTable : public BaseAction {
 public:
     OpenTable(int id, std::vector<Customer *> &customersList);//
-    void act(Restaurant &restaurant);
-    std::string toString() const;
+    void act(Restaurant &restaurant);//
+    std::string toString() const;//
 private:
     const int tableId;//
     const std::vector<Customer *> customers;//
