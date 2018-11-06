@@ -16,34 +16,34 @@ enum ActionStatus{
 //Forward declaration
 class Restaurant;
 
-class BaseAction{
+class BaseAction{ //dane
 public:
-    BaseAction();//to do
-    ActionStatus getStatus() const; //
-    virtual void act(Restaurant& restaurant)=0;//
-    virtual std::string toString() const=0;//
+    BaseAction();
+    ActionStatus getStatus() const;
+    virtual void act(Restaurant& restaurant)=0;
+    virtual std::string toString() const=0;
 protected:
-    void complete(); //
-    void error(std::string errorMsg); //
-    std::string getErrorMsg() const; //
+    void complete();
+    void error(std::string errorMsg);
+    std::string getErrorMsg() const;
 private:
-    std::string errorMsg;//
-    ActionStatus status;//
+    std::string errorMsg;
+    ActionStatus status;
 };
 
 
-class OpenTable : public BaseAction {
+class OpenTable : public BaseAction { //dane
 public:
-    OpenTable(int id, std::vector<Customer *> &customersList);//
-    void act(Restaurant &restaurant);//
-    std::string toString() const;//
+    OpenTable(int id, std::vector<Customer *> &customersList);
+    void act(Restaurant &restaurant);
+    std::string toString() const;
 private:
-    const int tableId;//
-    const std::vector<Customer *> customers;//
+    const int tableId;
+    const std::vector<Customer *> customers;
 };
 
 
-class Order : public BaseAction {
+class Order : public BaseAction { //lishay
 public:
     Order(int id);
     void act(Restaurant &restaurant);
@@ -53,7 +53,7 @@ private:
 };
 
 
-class MoveCustomer : public BaseAction {
+class MoveCustomer : public BaseAction { //dane ex to string
 public:
     MoveCustomer(int src, int dst, int customerId);
     void act(Restaurant &restaurant);
@@ -65,7 +65,7 @@ private:
 };
 
 
-class Close : public BaseAction {
+class Close : public BaseAction { //liads  mission
 public:
     Close(int id);
     void act(Restaurant &restaurant);
@@ -75,7 +75,7 @@ private:
 };
 
 
-class CloseAll : public BaseAction {
+class CloseAll : public BaseAction { //liad
 public:
     CloseAll();
     void act(Restaurant &restaurant);
@@ -84,7 +84,7 @@ private:
 };
 
 
-class PrintMenu : public BaseAction {
+class PrintMenu : public BaseAction { // dane ex tostring
 public:
     PrintMenu();
     void act(Restaurant &restaurant);
@@ -93,7 +93,7 @@ private:
 };
 
 
-class PrintTableStatus : public BaseAction {
+class PrintTableStatus : public BaseAction { //liad
 public:
     PrintTableStatus(int id);
     void act(Restaurant &restaurant);
@@ -103,7 +103,7 @@ private:
 };
 
 
-class PrintActionsLog : public BaseAction {
+class PrintActionsLog : public BaseAction { //lishay
 public:
     PrintActionsLog();
     void act(Restaurant &restaurant);

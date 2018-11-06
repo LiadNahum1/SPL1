@@ -14,7 +14,11 @@ typedef std::pair<int, Dish> OrderPair;
 class Table{
 public:
     Table(int t_capacity);
-    Table(const Table & other); //TODO
+    Table( const Table &other);
+    virtual ~Table();
+    Table &operator=(const Table &other);
+    Table (Table && other);
+    Table &operator= (Table && other);
     int getCapacity() const;
     void addCustomer(Customer* customer);
     void removeCustomer(int id);
@@ -26,6 +30,7 @@ public:
     void closeTable();
     int getBill();
     bool isOpen();
+
 private:
     int capacity;
     bool open;
