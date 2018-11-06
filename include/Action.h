@@ -43,7 +43,7 @@ private:
 };
 
 
-class Order : public BaseAction {
+class Order : public BaseAction { //lishay
 public:
     Order(int id);
     void act(Restaurant &restaurant);
@@ -53,7 +53,7 @@ private:
 };
 
 
-class MoveCustomer : public BaseAction {
+class MoveCustomer : public BaseAction { //dane ex to string
 public:
     MoveCustomer(int src, int dst, int customerId);
     void act(Restaurant &restaurant);
@@ -65,7 +65,7 @@ private:
 };
 
 
-class Close : public BaseAction {
+class Close : public BaseAction { //liads  mission
 public:
     Close(int id);
     void act(Restaurant &restaurant);
@@ -75,7 +75,7 @@ private:
 };
 
 
-class CloseAll : public BaseAction {
+class CloseAll : public BaseAction { //liad
 public:
     CloseAll();
     void act(Restaurant &restaurant);
@@ -84,7 +84,7 @@ private:
 };
 
 
-class PrintMenu : public BaseAction {
+class PrintMenu : public BaseAction { // dane ex tostring
 public:
     PrintMenu();
     void act(Restaurant &restaurant);
@@ -93,7 +93,7 @@ private:
 };
 
 
-class PrintTableStatus : public BaseAction {
+class PrintTableStatus : public BaseAction { //liad
 public:
     PrintTableStatus(int id);
     void act(Restaurant &restaurant);
@@ -103,7 +103,7 @@ private:
 };
 
 
-class PrintActionsLog : public BaseAction {
+class PrintActionsLog : public BaseAction { //lishay
 public:
     PrintActionsLog();
     void act(Restaurant &restaurant);

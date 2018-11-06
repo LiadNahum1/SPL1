@@ -16,8 +16,8 @@ void Table :: addCustomer(Customer* customer) {
             customersList.push_back(customer);
         }
     }
-
 }
+Table::Table(const Table &other): open(other.open),capacity(other.capacity) {}
 void Table :: removeCustomer(int id) {
     //remove customer
     for (int i = 0; i < customersList.size(); ++i) {

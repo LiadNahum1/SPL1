@@ -8,47 +8,51 @@
 using namespace std;
 
 
-Restaurant::Restaurant(const std::string &configFilePath) {start(); }
-void Restaurant::start() {
+Restaurant::Restaurant(const std::string &configFilePath):open(true)
+{
     int numTables = 0;
     int dishNum = 0;
     bool tableDe = false;
     bool tableNum = false;
     bool menuDe = false;
-    ifstream input( configFilePath );
-    for( std::string line; getline( input, line ); ){
-
+    ifstream nameFileout;
+    nameFileout.open(configFilePath);
+    string line;
+    while(std::getline(nameFileout, line))
+    {
         if(tableDe & line != "") {
-            openTable(line , numTables);
-            tableDe = false;
+        openTable(line , numTables);
+        tableDe = false;
         }
         if(tableNum & line != "") {
-            numTables = atoi(line.c_str());
-            tableNum = false;
+        numTables = atoi(line.c_str());
+        tableNum = false;
         }
         if(menuDe & line != "") {
-            DishType ty;//check if is the right way
-            string dish []  = line.split(",");
-            if(dish[2] == "VEG")
-                ty = VEG;
-            if(dish[2] == "SPC")
-                ty = SPC;
-            if(dish[2] == "BVG")
-                ty = BVG;
-            if(dish[2] == "ALC")
-                ty = ALC;
-            menu.push_back(Dish(dishNum,dish[0], atoi(dish[1].c_str())), ty)//how to convert an enum to string
+        DishType ty;//check if is the right way
+        string dish []  = line.split(",");
+        if(dish[2] == "VEG")
+            ty = VEG;
+        if(dish[2] == "SPC")
+            ty = SPC;
+        if(dish[2] == "BVG")
+            ty = BVG;
+        if(dish[2] == "ALC")
+            ty = ALC;
+        menu.push_back(Dish(dishNum,dish[0], atoi(dish[1].c_str())), ty)//how to convert an enum to string
         }
 
         if(line == "#Menu")
-            menuDe = true;
+        menuDe = true;
 
         if(line == "#number of tables")
-            tableNum = true;
+        tableNum = true;
 
         if(line == "#tables description")
-            tableDe = true;
+        tableDe = true;
     }
+}
+void Restaurant::start() {
 }
 void Restaurant::openTable(std::string input , int tableNum) { //dane
     int tableSize  = atoi(input.c_str());
