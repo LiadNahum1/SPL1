@@ -6,15 +6,20 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <fstream>
+#include <stdio.h>
+#include <stdlib.h>
 using namespace std;
 
 
 Restaurant::Restaurant(const std::string &configFilePath):open(true)
-{   int numTables = 0;
-    int dishNum = 0;
-    bool tableDe = false;
-    bool tableNum = false;
-    bool menuDe = false;
+{
+
+    int numTables(0);
+    int dishNum(0);
+    bool tableDe(false);
+    bool tableNum(false);
+    bool menuDe(false);
     ifstream nameFileout;
     nameFileout.open(configFilePath);
     string line;
@@ -29,17 +34,22 @@ Restaurant::Restaurant(const std::string &configFilePath):open(true)
             tableNum = false;
         }
         if(menuDe & !line.empty()) {
-            DishType ty();//check if is the right way
-            string dish []  = line.split(",");
-            if(dish[2] == "VEG")
+            DishType ty; //check if is the right way
+            int firstCommaInd(line.find_first_of(","));
+            int lastCommaInd(line.find_last_of(","));
+            string d_name(line.substr(0, firstCommaInd));
+            string d_type(line.substr(lastCommaInd));
+            if(d_type == "VEG")
                 ty = VEG;
-            if(dish[2] == "SPC")
+            if(d_type == "SPC")
                 ty = SPC;
-            if(dish[2] == "BVG")
+            if(d_type == "BVG")
                 ty = BVG;
-            if(dish[2] == "ALC")
+            if(d_type == "ALC")
                 ty = ALC;
-            menu.push_back(Dish(dishNum,dish[0], atoi(dish[1].c_str())), ty)//how to convert an enum to string
+
+            menu.push_back(Dish(dishNum,d_name, atoi((line.substr(firstCommaInd + 1, lastCommaInd)).c_str()), ty));
+            dishNum = dishNum + 1;
         }
 
         if(line == "#Menu")
@@ -130,12 +140,11 @@ void Restaurant::start() {
     cout<<"Restaurant is now open!"<< endl;
 
     std::string actionToExecute("");
-
-    while(actionToExecute != "closeall"){
+    std::string action("");
+    while(action != "closeall"){
         getline (cin, actionToExecute);
         BaseAction * act = nullptr;
         std::istringstream tokens (actionToExecute);
-        std::string action("");
         tokens>> action;
         int t_id;
         if(action == "open"){
@@ -143,21 +152,23 @@ void Restaurant::start() {
             vector<Customer *> customers;
             int c_id(0);
             while(tokens){
-                std:string c_name;
+                std:: string c_details;
+                std::string c_name;
                 std :: string strategy;
-                tokens >> c_name;
-                if (tokens.peek() == ',')
-                    tokens.ignore();
-                tokens >> strategy;
-                if(strategy == "VEG")
-                    customers.push_back(new VegetarianCustomer(c_name, c_id));
-                if(strategy == "SPC")
-                    customers.push_back(new SpicyCustomer(c_name, c_id));
-                if(strategy == "CHP")
-                    customers.push_back(new CheapCustomer(c_name, c_id));
-                if(strategy == "ALC")
-                    customers.push_back(new AlchoholicCustomer(c_name, c_id));
-                c_id = c_id + 1;
+                tokens >> c_details;
+                if(c_details != "") {
+                    c_name = c_details.substr(0, c_details.find(","));
+                    strategy = c_details.substr(c_details.find(",") + 1);
+                    if (strategy == "VEG")
+                        customers.push_back(new VegetarianCustomer(c_name, c_id));
+                    if (strategy == "SPC")
+                        customers.push_back(new SpicyCustomer(c_name, c_id));
+                    if (strategy == "CHP")
+                        customers.push_back(new CheapCustomer(c_name, c_id));
+                    if (strategy == "ALC")
+                        customers.push_back(new AlchoholicCustomer(c_name, c_id));
+                    c_id = c_id + 1;
+                }
             }
             act = new OpenTable(t_id, customers);
 
@@ -176,7 +187,28 @@ void Restaurant::start() {
             tokens >> c_id;
             act = new MoveCustomer(origin_id, dst_id, c_id);
         }
-        if(action == "")
+
+        if(action == "close"){
+            tokens >> t_id;
+            act = new Close(t_id);
+        }
+
+        if(action == "menu"){
+            act = new PrintMenu();
+        }
+        if(action == "status"){
+            tokens >> t_id;
+            act = new PrintTableStatus(t_id);
+        }
+        if(action == "log"){
+            act = new PrintActionsLog();
+        }
+        if(action == "backup"){
+            act = new BackupRestaurant();
+        }
+        if(action == "restore"){
+            act = new RestoreResturant();
+        }
         actionsLog.push_back(act);
         act->act(*this);
 
@@ -184,14 +216,18 @@ void Restaurant::start() {
     }
 
 }
-void Restaurant::openTable(std::string input , int tableNum) { //dane
-    std::vector<std::string> v;
+void Restaurant::openTable(std::string input , int numTables) { //dane
+    tables.resize(numTables);
+    int beginInd(0);
+    int commaInd;
+    int capacity;
+    while(input != "") {
 
-    split( "This  is a  test", v, "," );
-    dump( cout, v );
-    for (int i = 0; i < nums.lenght; i++) { //this will create tables
-        tableSize  = atoi(nums[i].c_str());
-        tables.push_back( new Table(tableSize));
+        commaInd = input.find_first_of(",");
+        capacity = atoi(input.substr(beginInd, commaInd).c_str());
+        tables.push_back(new Table(capacity));
+        input = input.substr(commaInd + 1);
+        beginInd = commaInd + 1;
     }
 }
 Table* Restaurant::getTable(int ind) const{
@@ -202,5 +238,5 @@ int Restaurant::getNumOfTables() const { return tables.size();} //dane
 
 const std::vector<BaseAction *> & Restaurant::getActionsLog() const { return actionsLog;}//dane
 
-std::vector<Dish> & Restaurant::getMenu() { return menu;}//dane
+std::vector<Dish> & Restaurant::getMenu() { return menu;}//done
 
