@@ -43,7 +43,7 @@ private:
 };
 
 
-class Order : public BaseAction { //lishay
+class Order : public BaseAction { //dane
 public:
     Order(int id);
     void act(Restaurant &restaurant);
@@ -101,7 +101,6 @@ public:
 private:
     const int tableId;
 };
-
 
 class PrintActionsLog : public BaseAction { //lishay dane
 public:

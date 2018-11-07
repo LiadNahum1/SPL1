@@ -17,7 +17,47 @@ void Table :: addCustomer(Customer* customer) {
         }
     }
 }
-Table::Table(const Table &other): open(other.open),capacity(other.capacity) {}
+Table::Table(const Table &other): open(other.open),capacity(other.capacity),orderList(other.orderList) {
+    for(int i = 0; i< other.getCustomers().size() ; i++){
+        customersList.push_back(other.getCustomers().at(i)->clone());
+    }
+}
+Table& Table::operator=(const Table &other)   {
+    if(this != &other) {
+        open = other.open;
+        capacity = other.capacity;
+        orderList = other.orderList;
+        for (int i = 0; i < customersList.size(); i++) {
+            delete (customersList.at(i));
+        }
+        customersList.clear();
+        for (int i = 0; i < other.getCustomers().size(); i++) {
+            customersList.push_back(other.getCustomers().at(i)->clone());
+        }
+    }
+}
+Table::~Table() {
+    for(int i = 0; i< customersList.size() ; i++) {
+        delete(customersList.at(i));
+    }
+    orderList.clear();
+    customersList.clear();
+}
+Table::Table(Table &&other) : open(other.open),capacity(other.capacity),orderList(other.orderList),customersList(other.customersList){
+    other.getCustomers().clear();
+}
+Table& Table::operator=(Table &&other) {
+    for(int i = 0; i< customersList.size() ; i++) {
+        delete(customersList.at(i));
+    }
+    orderList.clear();
+    customersList.clear();
+    open = other.open;
+    capacity = other.capacity;
+    orderList = other.orderList;
+    customersList = other.customersList;
+    other.customersList.clear();
+}
 void Table :: removeCustomer(int id) {
     //remove customer
     for (int i = 0; i < customersList.size(); ++i) {
@@ -52,7 +92,7 @@ Customer* Table :: getCustomer(int id) {
     }
     return nullptr;
 }
-std::vector<Customer*>& Table :: getCustomers(){ return customersList;}
+vector<Customer *> & Table :: getCustomers() const { return customersList;}
 
 std::vector<OrderPair>& Table :: getOrders(){ return orderList;}
 void Table :: order(const std::vector<Dish> &menu){

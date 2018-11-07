@@ -72,6 +72,10 @@ void SpicyCustomer :: nextOrders(const std::vector<Dish> &menu, vector<int> &ord
         orderId.push_back(id);
     }
 }
+Customer* SpicyCustomer::clone() {
+    SpicyCustomer *sp = new SpicyCustomer(this->getName(),this->getId());
+    sp->orderOnce = this->orderOnce;
+    return sp;}
 std::string SpicyCustomer :: toString() const{
     return getName() + "," + "spc";
 }

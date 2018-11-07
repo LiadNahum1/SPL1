@@ -56,6 +56,9 @@ std::vector<int> VegetarianCustomer :: order(const std::vector<Dish> &menu){
     }
     return orders;
 }
+Customer* VegetarianCustomer::clone() {
+    VegetarianCustomer *ve = new VegetarianCustomer(this->getName(),this->getId());
+    return ve;}
 std::string VegetarianCustomer :: toString() const{
     return getName() + "," + "veg";
 
