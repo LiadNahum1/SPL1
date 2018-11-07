@@ -12,9 +12,8 @@
 using namespace std;
 
 
-Restaurant::Restaurant(const std::string &configFilePath):open(true)
+Restaurant::Restaurant(const std::string &configFilePath):open(false)
 {
-
     int numTables(0);
     int dishNum(0);
     bool tableDe(false);
@@ -65,7 +64,7 @@ Restaurant::Restaurant(const std::string &configFilePath):open(true)
 //copy constructor
 Restaurant :: Restaurant(const Restaurant & other) : open(other.open), menu(other.menu) {
     for (int i = 0; i < other.getNumOfTables(); ++i) {
-        tables.push_back(new Table(* other.getTable(i)));
+        tables.push_back(new Table(*other.tables.at(i)));
     }
     for (int i = 0; i < other.getActionsLog().size(); ++i) {
         actionsLog.push_back(other.getActionsLog().at(i)-> clone()); //TODO
@@ -79,7 +78,7 @@ Restaurant :: Restaurant(const Restaurant & other) : open(other.open), menu(othe
      }
      tables.clear();
      for (int j = 0; j < actionsLog.size(); ++j) {
-         delete actionsLog.at(i);
+         delete actionsLog.at(j);
      }
      actionsLog.clear();
 
@@ -99,7 +98,7 @@ Restaurant & Restaurant ::operator=(const Restaurant &other){
         actionsLog.clear();
 
         for (int i = 0; i < other.getNumOfTables(); ++i) {
-            tables.push_back(new Table( * other.getTable(i)));
+            tables.push_back(new Table( * other.tables.at(i)));
         }
         for (int i = 0; i < other.getActionsLog().size(); ++i) {
             actionsLog.push_back(other.getActionsLog().at(i)-> clone()); //TODO
@@ -112,7 +111,6 @@ Restaurant :: Restaurant(Restaurant && other): open(other.open), menu(other.menu
     other.tables.clear();
     other.actionsLog.clear();
 }
-
 //move operator
 Restaurant & Restaurant :: operator=(Restaurant && other){
     if(this != &other){
@@ -127,7 +125,7 @@ Restaurant & Restaurant :: operator=(Restaurant && other){
         other.tables.clear();
 
         for (int j = 0; j < actionsLog.size(); ++j) {
-            delete actionsLog.at(i);
+            delete actionsLog.at(j);
         }
         actionsLog.clear();
         actionsLog = other.actionsLog;
@@ -137,6 +135,7 @@ Restaurant & Restaurant :: operator=(Restaurant && other){
 
 }
 void Restaurant::start() {
+    open = true;
     cout<<"Restaurant is now open!"<< endl;
 
     std::string actionToExecute("");
@@ -233,10 +232,7 @@ void Restaurant::openTable(std::string input , int numTables) { //dane
 Table* Restaurant::getTable(int ind){
     return tables[ind];//dane
 }
-
 int Restaurant::getNumOfTables() const { return tables.size();} //dane
-
 const std::vector<BaseAction *> & Restaurant::getActionsLog() const { return actionsLog;}//dane
-
 std::vector<Dish> & Restaurant::getMenu() { return menu;}//done
 

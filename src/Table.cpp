@@ -9,7 +9,7 @@ using namespace std;
 
 
 Table :: Table(int t_capacity): capacity(t_capacity), open(false){}
-int Table :: getCapacity() const{return capacity;};
+int Table :: getCapacity() const{return capacity;}
 void Table :: addCustomer(Customer* customer) {
     if(!isOpen()) {
         if (customersList.size() < getCapacity()) {
@@ -18,8 +18,8 @@ void Table :: addCustomer(Customer* customer) {
     }
 }
 Table::Table(const Table &other): open(other.open),capacity(other.capacity),orderList(other.orderList) {
-    for(int i = 0; i< other.getCustomers().size() ; i++){
-        customersList.push_back(other.getCustomers().at(i)->clone());
+    for(int i = 0; i< other.customersList.size() ; i++){
+        customersList.push_back(other.customersList.at(i)->clone());
     }
 }
 Table& Table::operator=(const Table &other)   {
@@ -31,8 +31,8 @@ Table& Table::operator=(const Table &other)   {
             delete (customersList.at(i));
         }
         customersList.clear();
-        for (int i = 0; i < other.getCustomers().size(); i++) {
-            customersList.push_back(other.getCustomers().at(i)->clone());
+        for (int i = 0; i < other.customersList.size(); i++) {
+            customersList.push_back(other.customersList.at(i)->clone());
         }
     }
 }
