@@ -92,7 +92,7 @@ Customer* Table :: getCustomer(int id) {
     }
     return nullptr;
 }
-vector<Customer *> & Table :: getCustomers() const { return customersList;}
+vector<Customer *> & Table :: getCustomers() { return customersList;}
 
 std::vector<OrderPair>& Table :: getOrders(){ return orderList;}
 void Table :: order(const std::vector<Dish> &menu){

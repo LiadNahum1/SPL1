@@ -230,7 +230,7 @@ void Restaurant::openTable(std::string input , int numTables) { //dane
         beginInd = commaInd + 1;
     }
 }
-Table* Restaurant::getTable(int ind) const{
+Table* Restaurant::getTable(int ind){
     return tables[ind];//dane
 }
 

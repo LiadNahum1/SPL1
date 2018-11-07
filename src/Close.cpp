@@ -6,6 +6,7 @@
 #include "../include/Table.h"
 
 
+
 Close :: Close(int id): tableId(id){}
 void Close :: act(Restaurant &restaurant)
 {

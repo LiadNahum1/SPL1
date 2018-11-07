@@ -23,7 +23,7 @@ public:
     void addCustomer(Customer* customer);
     void removeCustomer(int id);
     Customer* getCustomer(int id);
-    vector<Customer *> & getCustomers() const;
+    vector<Customer *> & getCustomers();
     std::vector<OrderPair>& getOrders();
     void order(const std::vector<Dish> &menu);
     void openTable();
