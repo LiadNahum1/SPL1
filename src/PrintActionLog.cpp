@@ -8,7 +8,7 @@ PrintActionsLog::PrintActionsLog() {}
 void PrintActionsLog::act(Restaurant &restaurant) {
 
     for (int i = 0; i < restaurant.getActionsLog().size(); ++i) {
-       
+
     }
 }
 std::string PrintActionsLog::toString() const {}
