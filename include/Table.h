@@ -14,16 +14,16 @@ typedef std::pair<int, Dish> OrderPair;
 class Table{
 public:
     Table(int t_capacity);
-    Table(const Table &other);
+    Table(const Table &other);//
     virtual ~Table();
-    Table &operator=(const Table &other);
+    Table &operator=(const Table &other);//
     Table (Table && other);
     Table &operator= (Table && other);
     int getCapacity() const;
     void addCustomer(Customer* customer);
     void removeCustomer(int id);
     Customer* getCustomer(int id);
-    std::vector<Customer*>& getCustomers();
+    vector<Customer *> & getCustomers() const;
     std::vector<OrderPair>& getOrders();
     void order(const std::vector<Dish> &menu);
     void openTable();

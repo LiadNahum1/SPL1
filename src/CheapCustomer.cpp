@@ -23,6 +23,11 @@ std::vector<int> CheapCustomer :: order(const std::vector<Dish> &menu) {
     return orderId;
 
 }
+Customer* CheapCustomer::clone() {
+    CheapCustomer *ch = new CheapCustomer(this->getName(),this->getId());
+    ch->orderOnce = this->orderOnce;
+    return ch;
+}
 std::string CheapCustomer :: toString() const{
     return getName() + "," + "chp";
 }

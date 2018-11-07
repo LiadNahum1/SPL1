@@ -32,6 +32,11 @@ std::vector<int> AlchoholicCustomer :: order(const std::vector<Dish> &menu){
     }
     return orderId;
 }
+Customer* AlchoholicCustomer::clone() {
+    AlchoholicCustomer *al = new AlchoholicCustomer(this->getName(),this->getId());
+    al->prevPrice = this->prevPrice;
+    return al;
+}
 std::string AlchoholicCustomer :: toString() const{
     return getName() + "," + "alc";
 }

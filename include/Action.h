@@ -32,7 +32,7 @@ private:
 };
 
 
-class OpenTable : public BaseAction { //dane
+class OpenTable : public BaseAction { //dane sholud i add error message in to string? TODO
 public:
     OpenTable(int id, std::vector<Customer *> &customersList);
     void act(Restaurant &restaurant);
@@ -43,7 +43,7 @@ private:
 };
 
 
-class Order : public BaseAction { //lishay
+class Order : public BaseAction { //dane
 public:
     Order(int id);
     void act(Restaurant &restaurant);
@@ -102,8 +102,7 @@ private:
     const int tableId;
 };
 
-
-class PrintActionsLog : public BaseAction { //lishay
+class PrintActionsLog : public BaseAction { //lishay dane
 public:
     PrintActionsLog();
     void act(Restaurant &restaurant);
