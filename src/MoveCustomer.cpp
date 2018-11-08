@@ -4,6 +4,7 @@
 
 #include "../include/Action.h"
 #include "../include/Table.h"
+#include "../include/Restaurant.h"
 #include <iostream>
 using namespace std;
 

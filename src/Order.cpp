@@ -1,5 +1,6 @@
 #include "../include/Action.h"
 #include "../include/Table.h"
+#include "../include/Restaurant.h"
 //
 // Created by USER on 11/7/2018.
 //

@@ -4,7 +4,7 @@
 #include <string>
 #include <iostream>
 #include "../include/Action.h"
-
+#include "../include/Restaurant.h"
 
 PrintMenu :: PrintMenu(){}
 void PrintMenu :: act(Restaurant &restaurant) {

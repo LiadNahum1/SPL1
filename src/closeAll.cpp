@@ -4,7 +4,7 @@
 
 #include "../include/Action.h"
 #include "../include/Table.h"
-
+#include "../include/Restaurant.h"
 
 
 CloseAll :: CloseAll(){}

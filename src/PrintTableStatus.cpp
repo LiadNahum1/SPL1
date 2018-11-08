@@ -4,10 +4,11 @@
 
 #include "../include/Action.h"
 #include "../include/Table.h"
+#include "../include/Restaurant.h"
 
 PrintTableStatus :: PrintTableStatus(int id):tableId(id){}
 void PrintTableStatus  :: act(Restaurant &restaurant){
-    Table * t = restaurant.getTable(i);
+    Table * t = restaurant.getTable(tableId);
     //status
     cout << "Table " << tableId<< " status: ";
     if(t->isOpen()){

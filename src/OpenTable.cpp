@@ -4,6 +4,7 @@
 
 #include "../include/Action.h"
 #include "../include/Table.h"
+#include "../include/Restaurant.h"
 using namespace std;
 OpenTable::OpenTable(int id, std::vector<Customer *> &customersList) : tableId(id),customers(customersList){}
 void OpenTable::act(Restaurant &restaurant) {
