@@ -18,7 +18,7 @@ void CloseAll :: act(Restaurant &restaurant){
     }
 
     delete &restaurant;
-
+complete();
 }
 std::string CloseAll :: toString() const {
     return "CloseAll Completed" ;

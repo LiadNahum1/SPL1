@@ -208,8 +208,8 @@ void Restaurant::start() {
         if(action == "restore"){
             act = new RestoreResturant();
         }
-        actionsLog.push_back(act);
         act->act(*this);
+        actionsLog.push_back(act);
 
 
     }

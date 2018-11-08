@@ -10,5 +10,8 @@ void PrintActionsLog::act(Restaurant &restaurant) {
     for (int i = 0; i < actions.size(); ++i) {
         std::cout << actions.at(i)->toString();
     }
+    complete();
 }
-std::string PrintActionsLog::toString() const {}
+std::string PrintActionsLog::toString() const {
+    return "log Completed";
+}

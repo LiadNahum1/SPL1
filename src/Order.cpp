@@ -21,5 +21,11 @@ void Order::act(Restaurant &restaurant) {
     }
 }
 std::string Order::toString() const {
-    std::string output = "open" + tableId + this->getStatus();
+    std::string output = "open" + tableId;
+    if( getStatus() == COMPLETED){
+        output = output + "Completed";
+    }
+    if(getStatus() == ERROR){
+        output = output + getErrorMsg();
+    }
 }
