@@ -34,6 +34,11 @@ std::string OpenTable::toString() const {
         output = output + customers[i]->toString() + ",";
     }
     output.substr(0,output.size()-2);
-    output = output +  this->toString();
+    if( getStatus() == COMPLETED){
+        output = output + "Completed";
+    }
+    if(getStatus() == ERROR){
+        output = output + getErrorMsg();
+    }
     return output;
 }

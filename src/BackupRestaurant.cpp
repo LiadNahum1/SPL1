@@ -7,6 +7,9 @@ extern Restaurant * backup;
 BackupRestaurant :: BackupRestaurant(){}
 void BackupRestaurant :: act(Restaurant &restaurant){
     backup = new Restaurant(restaurant);
+    complete();
 }
-std::string BackupRestaurant :: toString() const{}
+std::string BackupRestaurant :: toString() const{
+    return "backup Completed";
+}
 BaseAction * BackupRestaurant :: clone(){}

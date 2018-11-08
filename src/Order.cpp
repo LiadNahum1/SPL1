@@ -24,5 +24,11 @@ BaseAction * Order:: clone() {
     return new Order(tableId);
 }
 std::string Order::toString() const {
-    std::string output = "open" + tableId + this->getStatus();
+    std::string output = "open" + tableId;
+    if( getStatus() == COMPLETED){
+        output = output + "Completed";
+    }
+    if(getStatus() == ERROR){
+        output = output + getErrorMsg();
+    }
 }
