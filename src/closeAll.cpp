@@ -18,7 +18,10 @@ void CloseAll :: act(Restaurant &restaurant){
     }
 
     delete &restaurant;
+}
 
+BaseAction * CloseAll:: clone() {
+    return new CloseAll();
 }
 std::string CloseAll :: toString() const {
     return "CloseAll Completed" ;

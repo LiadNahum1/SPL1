@@ -19,6 +19,14 @@ void OpenTable::act(Restaurant &restaurant) {
         complete();
     }
 }
+
+BaseAction * OpenTable:: clone() {
+    vector<Customer *> customersNew;
+    for (int i = 0; i < customers.size(); ++i) {
+        customersNew.push_back(customers.at(i)->clone());
+    }
+    return new OpenTable(tableId, customersNew);
+}
 std::string OpenTable::toString() const {
     std::string output = "open";
     output = output + std::to_string(tableId) + " ";

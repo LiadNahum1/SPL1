@@ -25,7 +25,7 @@ void Close :: act(Restaurant &restaurant)
 
 }
 BaseAction * Close:: clone() {
-
+    return new Close(tableId);
 }
 
 std::string Close :: toString() const{

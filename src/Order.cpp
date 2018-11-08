@@ -20,6 +20,9 @@ void Order::act(Restaurant &restaurant) {
         complete();
     }
 }
+BaseAction * Order:: clone() {
+    return new Order(tableId);
+}
 std::string Order::toString() const {
     std::string output = "open" + tableId + this->getStatus();
 }
