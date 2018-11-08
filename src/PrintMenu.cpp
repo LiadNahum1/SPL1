@@ -16,6 +16,12 @@ void PrintMenu :: act(Restaurant &restaurant) {
     }
     complete();
 }
+
+BaseAction * PrintMenu:: clone() {
+    BaseAction * menu = new PrintMenu();
+    menu  -> CloneBase(getErrorMsg(), getStatus());
+    return menu ;
+}
 std::string PrintMenu :: toString() const {
     return "PrintMenu Completed" ;
 

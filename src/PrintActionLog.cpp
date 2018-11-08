@@ -12,6 +12,11 @@ void PrintActionsLog::act(Restaurant &restaurant) {
     }
     complete();
 }
+BaseAction * PrintActionsLog:: clone() {
+    BaseAction * actionsLog = new PrintActionsLog();
+    actionsLog  -> CloneBase(getErrorMsg(), getStatus());
+    return actionsLog ;
+}
 std::string PrintActionsLog::toString() const {
     return "log Completed";
 }

@@ -12,4 +12,8 @@ void BackupRestaurant :: act(Restaurant &restaurant){
 std::string BackupRestaurant :: toString() const{
     return "backup Completed";
 }
-BaseAction * BackupRestaurant :: clone(){}
+BaseAction * BackupRestaurant:: clone() {
+    BaseAction * backupC = new BackupRestaurant();
+    backupC  -> CloneBase(getErrorMsg(), getStatus());
+    return backupC;
+}

@@ -2,8 +2,7 @@
 // Created by liad on 11/5/18.
 //
 
-#include <unordered_map>
-#include <algorithm>
+
 #include "../include/Table.h"
 using namespace std;
 

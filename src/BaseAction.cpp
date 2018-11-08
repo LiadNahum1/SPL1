@@ -11,3 +11,7 @@ void BaseAction::error(std::string errorMsg) {
 }
 std::string BaseAction::getErrorMsg() const { return errorMsg;}
 ActionStatus BaseAction::getStatus() const {return status;}
+void BaseAction :: CloneBase(std::string errorMsg, ActionStatus status){
+    this->errorMsg = errorMsg;
+    this->status = status;
+}

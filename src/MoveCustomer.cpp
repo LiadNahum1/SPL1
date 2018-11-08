@@ -42,7 +42,9 @@ void MoveCustomer :: act(Restaurant &restaurant){
     }
 }
 BaseAction * MoveCustomer:: clone() {
-    return new MoveCustomer(srcTable ,dstTable, id);
+    BaseAction * moveC = new MoveCustomer(srcTable ,dstTable, id);
+    moveC -> CloneBase(getErrorMsg(), getStatus());
+    return moveC;
 }
 std::string MoveCustomer :: toString() const{
     std:string output = "MoveCustomer" + std::to_string(srcTable) + " " + std::to_string(dstTable)+ " " + std::to_string(id) + " ";

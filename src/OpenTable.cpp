@@ -25,7 +25,10 @@ BaseAction * OpenTable:: clone() {
     for (int i = 0; i < customers.size(); ++i) {
         customersNew.push_back(customers.at(i)->clone());
     }
-    return new OpenTable(tableId, customersNew);
+    BaseAction * openC =  new OpenTable(tableId, customersNew);
+    openC -> CloneBase(getErrorMsg(), getStatus());
+    return openC;
+
 }
 std::string OpenTable::toString() const {
     std::string output = "open";

@@ -30,6 +30,11 @@ void PrintTableStatus  :: act(Restaurant &restaurant){
     }
     complete();
 }
+BaseAction * PrintTableStatus:: clone() {
+    BaseAction * tableStatus = new PrintTableStatus(tableId);
+    tableStatus  -> CloneBase(getErrorMsg(), getStatus());
+    return tableStatus ;
+}
 std::string PrintTableStatus :: toString() const{
     return "PrintTableStatus Completed" ;
 }

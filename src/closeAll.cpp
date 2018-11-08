@@ -20,6 +20,12 @@ void CloseAll :: act(Restaurant &restaurant){
     delete &restaurant;
 complete();
 }
+BaseAction * CloseAll:: clone() {
+    BaseAction * closeAllC =  new CloseAll();
+    closeAllC -> CloneBase(getErrorMsg(), getStatus());
+    return closeAllC;
+
+}
 std::string CloseAll :: toString() const {
     return "CloseAll Completed" ;
 

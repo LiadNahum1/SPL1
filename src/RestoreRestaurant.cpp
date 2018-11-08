@@ -22,4 +22,8 @@ std::string RestoreResturant:: toString() const{
         output = output + getErrorMsg();
     }
 }
-BaseAction * RestoreResturant :: clone(){}
+BaseAction * RestoreResturant:: clone() {
+    BaseAction * restore = new RestoreResturant();
+    restore  -> CloneBase(getErrorMsg(), getStatus());
+    return restore;
+}

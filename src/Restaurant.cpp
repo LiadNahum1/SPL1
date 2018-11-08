@@ -67,7 +67,7 @@ Restaurant :: Restaurant(const Restaurant & other) : open(other.open), menu(othe
         tables.push_back(new Table(*other.tables.at(i)));
     }
     for (int i = 0; i < other.getActionsLog().size(); ++i) {
-        actionsLog.push_back(other.getActionsLog().at(i)-> clone()); //TODO
+        actionsLog.push_back(other.getActionsLog().at(i)-> clone());
     }
 }
 //destruction
@@ -140,11 +140,13 @@ void Restaurant::start() {
 
     std::string actionToExecute("");
     std::string action("");
+
     while(action != "closeall"){
         getline (cin, actionToExecute);
         BaseAction * act = nullptr;
         std::istringstream tokens (actionToExecute);
         tokens>> action;
+        cout<<action;
         int t_id;
         if(action == "open"){
             tokens >> t_id;
