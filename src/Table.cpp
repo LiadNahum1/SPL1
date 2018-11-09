@@ -5,6 +5,7 @@
 
 #include "../include/Table.h"
 using namespace std;
+#include <iostream>
 
 
 Table :: Table(int t_capacity): capacity(t_capacity), open(false){}
@@ -48,6 +49,7 @@ Table::~Table() {
 }
 Table::Table(Table &&other) : open(other.open),capacity(other.capacity),orderList(other.orderList),customersList(other.customersList){
     other.getCustomers().clear();
+
 }
 Table& Table::operator=(Table &&other) {
     for(int i = 0; i< customersList.size() ; i++) {
@@ -94,6 +96,7 @@ std::vector<OrderPair>& Table :: getOrders(){ return orderList;}
 
 void Table :: order(const std::vector<Dish> &menu){
     vector<int>orders;
+    //cout <<"Customer size" << customersList.size()<<endl; //TODO
     for (int i = 0; i < customersList.size(); ++i) {
         orders = customersList.at(i)->order(menu); // id of orders of customer
         for (int j = 0; j < orders.size(); ++j) {

@@ -9,6 +9,7 @@
 #include <fstream>
 #include <stdio.h>
 #include <stdlib.h>
+
 using namespace std;
 
 
@@ -16,50 +17,52 @@ Restaurant::Restaurant(const std::string &configFilePath):open(false)
 {
     int numTables(0);
     int dishNum(0);
-    bool tableDe(false);
-    bool tableNum(false);
-    bool menuDe(false);
-    ifstream nameFileout;
-    nameFileout.open(configFilePath);
+
     string line;
-    while(std::getline(nameFileout, line))
-    {
-        if(tableDe & !line.empty()) {
-            openTable(line , numTables);
-            tableDe = false;
+    vector < string > lines;
+    ifstream file;
+    file.open (configFilePath);
+    int i(1);
+    if (file.is_open( )) {
+        while (getline(file, line)) {
+            if (!line.empty() && line[0] == '#') {
+                if (i == 1) {// number of tables
+                    getline(file, line);
+                    cout<<line<<endl;
+                    numTables = atoi(line.c_str());
+                    i = i + 1;
+                }
+                else if (i == 2) { //tables description
+                    getline(file, line);
+                    openTable(line, numTables);
+                    i = i + 1;
+                }
+                else if (i == 3) {//Menu
+                    while (getline(file, line)) {
+                        DishType ty; //check if is the right way
+                        int firstCommaInd(line.find_first_of(","));
+                        int lastCommaInd(line.find_last_of(","));
+                        string d_name(line.substr(0, firstCommaInd));
+                        string d_type(line.substr(lastCommaInd));
+                        if (d_type == "VEG")
+                            ty = VEG;
+                        if (d_type == "SPC")
+                            ty = SPC;
+                        if (d_type == "BVG")
+                            ty = BVG;
+                        if (d_type == "ALC")
+                            ty = ALC;
+
+                        menu.push_back(Dish(dishNum, d_name, atoi((line.substr(firstCommaInd + 1, lastCommaInd)).c_str()),ty));
+                        dishNum = dishNum + 1;
+                    }
+
+                }
+            }
         }
-        if(tableNum & !line.empty()) {
-            numTables = atoi(line.c_str());
-            tableNum = false;
-        }
-        if(menuDe & !line.empty()) {
-            DishType ty; //check if is the right way
-            int firstCommaInd(line.find_first_of(","));
-            int lastCommaInd(line.find_last_of(","));
-            string d_name(line.substr(0, firstCommaInd));
-            string d_type(line.substr(lastCommaInd));
-            if(d_type == "VEG")
-                ty = VEG;
-            if(d_type == "SPC")
-                ty = SPC;
-            if(d_type == "BVG")
-                ty = BVG;
-            if(d_type == "ALC")
-                ty = ALC;
-
-            menu.push_back(Dish(dishNum,d_name, atoi((line.substr(firstCommaInd + 1, lastCommaInd)).c_str()), ty));
-            dishNum = dishNum + 1;
-        }
-
-        if(line == "#Menu")
-            menuDe = true;
-
-        if(line == "#number of tables")
-            tableNum = true;
-
-        if(line == "#tables description")
-            tableDe = true;
     }
+
+    file.close();
 }
 //copy constructor
 Restaurant :: Restaurant(const Restaurant & other) : open(other.open), menu(other.menu) {
@@ -145,11 +148,12 @@ void Restaurant::start() {
         getline (cin, actionToExecute);
         BaseAction * act = nullptr;
         std::istringstream tokens (actionToExecute);
-        tokens>> action;
-        cout<<action;
+        tokens>> action ;
+        cout<<action<<endl;
         int t_id;
         if(action == "open"){
             tokens >> t_id;
+
             vector<Customer *> customers;
             int c_id(0);
             while(tokens){
@@ -157,17 +161,19 @@ void Restaurant::start() {
                 std::string c_name;
                 std :: string strategy;
                 tokens >> c_details;
-                if(c_details != "") {
+                if(!c_details.empty()) {
                     c_name = c_details.substr(0, c_details.find(","));
                     strategy = c_details.substr(c_details.find(",") + 1);
-                    if (strategy == "VEG")
+
+                    if (strategy.compare("veg") == 0)
                         customers.push_back(new VegetarianCustomer(c_name, c_id));
-                    if (strategy == "SPC")
+                    if (strategy.compare("spc")==0)
                         customers.push_back(new SpicyCustomer(c_name, c_id));
-                    if (strategy == "CHP")
+                    if (strategy.compare("chp")==0)
                         customers.push_back(new CheapCustomer(c_name, c_id));
-                    if (strategy == "ALC")
+                    if (strategy.compare("alc")==0)
                         customers.push_back(new AlchoholicCustomer(c_name, c_id));
+
                     c_id = c_id + 1;
                 }
             }
@@ -218,21 +224,27 @@ void Restaurant::start() {
 
 }
 void Restaurant::openTable(std::string input , int numTables) { //dane
-    tables.resize(numTables);
+    int commaInd(0);
     int beginInd(0);
-    int commaInd;
-    int capacity;
-    while(input != "") {
-
-        commaInd = input.find_first_of(",");
-        capacity = atoi(input.substr(beginInd, commaInd).c_str());
-        tables.push_back(new Table(capacity));
-        input = input.substr(commaInd + 1);
-        beginInd = commaInd + 1;
+    int capacity(0);
+    for (int i = 0; i < input.length(); ++i) {
+        if(input[i] == ','){
+            commaInd = i;
+            capacity = atoi(input.substr(beginInd, commaInd).c_str());
+            tables.push_back(new Table(capacity));
+            beginInd = commaInd + 1;
+        }
     }
+    //last capacity
+    capacity = atoi(input.substr(commaInd + 1).c_str());
+    tables.push_back(new Table(capacity));
+
 }
 Table* Restaurant::getTable(int ind){
-    return tables[ind];//dane
+    if(ind < getNumOfTables()) {
+        return tables.at(ind);
+    }
+    return nullptr;
 }
 int Restaurant::getNumOfTables() const { return tables.size();} //dane
 const std::vector<BaseAction *> & Restaurant::getActionsLog() const { return actionsLog;}//dane

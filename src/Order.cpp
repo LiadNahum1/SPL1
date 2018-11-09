@@ -7,15 +7,19 @@
 Order::Order(int id): tableId(id){}
 void Order::act(Restaurant &restaurant) {
     Table * t =restaurant.getTable(tableId);
+
     int custId;
 
     if(t == nullptr || !t->isOpen())
         error("Table does not exist or is not open");
     else{
+
         t->order(restaurant.getMenu());
+        cout<<t->getOrders().size()<<endl; //TODO
         for(int i = 0;i< t->getOrders().size();i++){
+
             custId = t->getOrders().at(i).first;
-            std::cout <<t->getCustomer(custId)->getName() + "ordered" + t->getOrders().at(i).second.getName();
+            std::cout <<t->getCustomer(custId)->getName() + "ordered" + t->getOrders().at(i).second.getName()<< endl;
         }
         complete();
     }
@@ -27,7 +31,7 @@ BaseAction * Order:: clone() {
     return orderC;
 }
 std::string Order::toString() const {
-    std::string output = "open" + tableId;
+    std::string output = "order " + tableId;
     if( getStatus() == COMPLETED){
         output = output + "Completed";
     }

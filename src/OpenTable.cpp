@@ -7,17 +7,25 @@
 #include "../include/Restaurant.h"
 using namespace std;
 OpenTable::OpenTable(int id, std::vector<Customer *> &customersList) : tableId(id),customers(customersList){}
+//OpenTable::OpenTable(const OpenTable &other) {
+  //  BaseAction * orderC = new Order(tableId);
+    //orderC ->CloneBase(getErrorMsg(), getStatus());
+//}
+
 void OpenTable::act(Restaurant &restaurant) {
     Table * t =restaurant.getTable(tableId);
-    if(t == nullptr || t->isOpen())
+    if(t == nullptr || t->isOpen()) {
         error("Table does not exist or is already open");
+    }
     else{
         for(int i = 0;i<customers.size();i++){
             t->addCustomer(customers[i]);
         }
+
         t->openTable();
         complete();
     }
+
 }
 
 BaseAction * OpenTable:: clone() {
