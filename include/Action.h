@@ -38,11 +38,16 @@ class OpenTable : public BaseAction { //dane sholud i add error message in to st
 public:
     OpenTable(int id, std::vector<Customer *> &customersList);
     void act(Restaurant &restaurant);
+    //rule of 3
+    OpenTable(const OpenTable & other) ;
+    virtual ~OpenTable();
+    OpenTable &operator=(const OpenTable &other);
+    //
     std::string toString() const;
     BaseAction * clone();
 private:
     const int tableId;
-    const std::vector<Customer *> customers; //lishay rule of 5
+    const std::vector<Customer *> customers; //lishay rule of 3
 };
 
 

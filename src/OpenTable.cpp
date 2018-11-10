@@ -38,6 +38,30 @@ BaseAction * OpenTable:: clone() {
     return openC;
 
 }
+OpenTable::OpenTable(const OpenTable &other):tableId(other.tableId) { //whay not working
+    for (int i = 0; i < other.customers.size(); ++i) {
+        customers.push_back(other.customers.at(i)-> clone()); // how to deal with the const
+    }
+}
+OpenTable::~OpenTable() {
+    for (int j = 0; j < customers.size(); ++j) {
+        delete customers.at(j);
+    }
+    this->customers.clear();//is it must
+}
+OpenTable& OpenTable::operator=(const OpenTable &other) {
+    if(this != &other) {
+        this->tableId = other.tableId; //const problem
+        for (int i = 0; i < customers.size(); ++i) {
+            delete customers.at(i);
+        }
+        customers.clear();
+        for (int i = 0; i < other.customers.size(); ++i) {
+            customers.push_back(other.customers.at(i)-> clone()); // how to deal with the const
+        }
+    }
+
+}
 std::string OpenTable::toString() const {
     std::string output = "open";
     output = output + std::to_string(tableId) + " ";
