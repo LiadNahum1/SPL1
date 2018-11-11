@@ -15,7 +15,7 @@ void PrintTableStatus  :: act(Restaurant &restaurant){
         cout << "open"<< endl;
     }
     else
-        cout<< "close"<< endl;
+        cout<< "close"<< endl ;
     //customers
     cout<< "Customers:"<< endl;
     vector<Customer *>& customers = t->getCustomers();
