@@ -18,7 +18,7 @@ public:
     virtual std::string toString() const = 0;
     std::string getName() const;
     int getId() const;
-    virtual Customer * clone() = 0;
+    virtual Customer * clone()=0;
 private:
     const std::string name;
     const int id;
@@ -30,7 +30,7 @@ public:
     VegetarianCustomer(std::string name, int id);
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
-    Customer * clone();
+    virtual Customer * clone();
 private:
 };
 
@@ -67,6 +67,7 @@ public:
     Customer * clone();
 private:
     int prevPrice;
+    int prevId;
 };
 
 

@@ -6,11 +6,9 @@
 #include "../include/Table.h"
 #include "../include/Restaurant.h"
 using namespace std;
-OpenTable::OpenTable(int id, std::vector<Customer *> &customersList) : tableId(id),customers(customersList){}
-//OpenTable::OpenTable(const OpenTable &other) {
-  //  BaseAction * orderC = new Order(tableId);
-    //orderC ->CloneBase(getErrorMsg(), getStatus());
-//}
+OpenTable::OpenTable(int id, std::vector<Customer *> &customersList) : tableId(id),customers(customersList){
+
+}
 
 void OpenTable::act(Restaurant &restaurant) {
     Table * t =restaurant.getTable(tableId);
@@ -21,7 +19,6 @@ void OpenTable::act(Restaurant &restaurant) {
         for(int i = 0;i<customers.size();i++){
             t->addCustomer(customers[i]);
         }
-
         t->openTable();
         complete();
     }

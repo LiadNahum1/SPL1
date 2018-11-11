@@ -15,14 +15,14 @@ std::vector<int> VegetarianCustomer :: order(const std::vector<Dish> &menu){
     int minId(-1);
     bool findFirstVeg(false);
     for (int i = 0; i < menu.size(); ++i) {
-        if (menu[i].getType() == VEG) {
+        if (menu.at(i).getType() == VEG) {
             if (!findFirstVeg) {
                 findFirstVeg = true;
-                minId= menu[i].getId();
+                minId= menu.at(i).getId();
             }
             else {
-                if (menu[i].getId() < minId)
-                    minId = menu[i].getId();
+                if (menu.at(i).getId() < minId)
+                    minId = menu.at(i).getId();
             }
         }
     }
@@ -33,19 +33,19 @@ std::vector<int> VegetarianCustomer :: order(const std::vector<Dish> &menu){
         int expensive(0);
         bool findFirstBev(false);
         for (int i = 0; i < menu.size(); ++i) {
-            if (menu[i].getType() == BVG) {
+            if (menu.at(i).getType() == BVG) {
                 if (!findFirstBev) {
                     findFirstBev = true;
-                    id = menu[i].getId();
-                    expensive = menu[i].getPrice();
+                    id = menu.at(i).getId();
+                    expensive = menu.at(i).getPrice();
                 } else {
-                    if (menu[i].getPrice() > expensive) {
-                        id = menu[i].getId();
-                        expensive = menu[i].getPrice();
+                    if (menu.at(i).getPrice() > expensive) {
+                        id = menu.at(i).getId();
+                        expensive = menu.at(i).getPrice();
                     }
-                    if (menu[i].getPrice() == expensive & menu[i].getId() < id) {
-                        id = menu[i].getId();
-                        expensive = menu[i].getPrice();
+                    if (menu.at(i).getPrice() == expensive & menu.at(i).getId() < id) {
+                        id = menu.at(i).getId();
+                        expensive = menu.at(i).getPrice();
                     }
 
                 }

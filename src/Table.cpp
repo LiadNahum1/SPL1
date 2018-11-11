@@ -11,11 +11,11 @@ using namespace std;
 Table :: Table(int t_capacity): capacity(t_capacity), open(false){}
 int Table :: getCapacity() const{return capacity;}
 void Table :: addCustomer(Customer* customer) {
-    if(!isOpen()) {
+   // if(!isOpen()) { //Todo check if needed
         if (customersList.size() < getCapacity()) {
             customersList.push_back(customer);
         }
-    }
+    //}
 }
 //copy constructor
 Table::Table(const Table &other): open(other.open),capacity(other.capacity),orderList(other.orderList) {
@@ -38,6 +38,7 @@ Table& Table::operator=(const Table &other)   {
             customersList.push_back(other.customersList.at(i)->clone());
         }
     }
+    return *this;
 }
 Table::~Table() {
     for(int i = 0; i< customersList.size() ; i++) {
@@ -52,35 +53,39 @@ Table::Table(Table &&other) : open(other.open),capacity(other.capacity),orderLis
 
 }
 Table& Table::operator=(Table &&other) {
-    for(int i = 0; i< customersList.size() ; i++) {
-        delete(customersList.at(i));
-        customersList.at(i) = nullptr;
+    if(this != &other) {
+        for (int i = 0; i < customersList.size(); i++) {
+            delete (customersList.at(i));
+            customersList.at(i) = nullptr;
+        }
+        orderList.clear();
+        customersList.clear();
+        open = other.open;
+        capacity = other.capacity;
+        orderList = other.orderList;
+        customersList = other.customersList;
+        other.customersList.clear();
     }
-    orderList.clear();
-    customersList.clear();
-    open = other.open;
-    capacity = other.capacity;
-    orderList = other.orderList;
-    customersList = other.customersList;
-    other.customersList.clear();
+    return *this;
 }
 void Table :: removeCustomer(int id) {
     //remove customer
     for (int i = 0; i < customersList.size(); ++i) {
         if (customersList.at(i)->getId() == id) {
-            delete customersList.at(i);
+            //delete customersList.at(i);
             customersList.at(i) = nullptr;
             customersList.erase(customersList.begin() + i);
         }
     }
-
+    cout<<customersList.size()<<endl;
     //remove orders of this customer
     for (int j = 0; j < orderList.size(); ++j) {
         if(orderList.at(j).first == id) {
-            customersList.erase(customersList.begin() + j);
+            orderList.erase(orderList.begin() + j);
             j = j - 1;
        }
     }
+
 }
 
 Customer* Table :: getCustomer(int id) {
@@ -96,13 +101,13 @@ std::vector<OrderPair>& Table :: getOrders(){ return orderList;}
 
 void Table :: order(const std::vector<Dish> &menu){
     vector<int>orders;
-    //cout <<"Customer size" << customersList.size()<<endl; //TODO
+    orderList.clear();
     for (int i = 0; i < customersList.size(); ++i) {
         orders = customersList.at(i)->order(menu); // id of orders of customer
         for (int j = 0; j < orders.size(); ++j) {
             for (int k = 0; k < menu.size(); ++k) {
-                if(orders.at(j) == menu.at(i).getId()){
-                    orderList.push_back(OrderPair(customersList.at(i)->getId(), menu.at(i)));
+                if(orders.at(j) == menu.at(k).getId()){
+                    orderList.push_back(OrderPair(customersList.at(i)->getId(), menu.at(k)));
                 }
             }
 

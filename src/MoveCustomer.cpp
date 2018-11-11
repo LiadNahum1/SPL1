@@ -23,17 +23,18 @@ void MoveCustomer :: act(Restaurant &restaurant){
         }
         else {
             tableDst->addCustomer(customer);
+
             vector<OrderPair> &ordersSrc = tableSrc->getOrders();
             vector<OrderPair> &ordersDst = tableDst->getOrders();
 
             for (int i = 0; i < ordersSrc.size(); ++i) {
                 if(ordersSrc.at(i).first == id) {
-
                     ordersDst.push_back(ordersSrc.at(i));
                 }
             }
 
             tableSrc->removeCustomer(id); //should erase the orders of him
+
             if (tableSrc->getCustomers().size() == 0) { //empty table
                 tableSrc->closeTable();
             }

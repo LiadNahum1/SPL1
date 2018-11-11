@@ -19,10 +19,12 @@ std::vector<int> CheapCustomer :: order(const std::vector<Dish> &menu) {
             }
         }
         orderId.push_back(cheapestIdOrder);
+        orderOnce = true;
     }
     return orderId;
 
 }
+
 Customer* CheapCustomer::clone() {
     CheapCustomer *ch = new CheapCustomer(this->getName(),this->getId());
     ch->orderOnce = this->orderOnce;
