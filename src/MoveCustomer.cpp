@@ -23,7 +23,6 @@ void MoveCustomer :: act(Restaurant &restaurant){
         }
         else {
             tableDst->addCustomer(customer);
-
             vector<OrderPair> &ordersSrc = tableSrc->getOrders();
             vector<OrderPair> &ordersDst = tableDst->getOrders();
 
@@ -32,9 +31,7 @@ void MoveCustomer :: act(Restaurant &restaurant){
                     ordersDst.push_back(ordersSrc.at(i));
                 }
             }
-
             tableSrc->removeCustomer(id); //should erase the orders of him
-
             if (tableSrc->getCustomers().size() == 0) { //empty table
                 tableSrc->closeTable();
             }
@@ -48,12 +45,13 @@ BaseAction * MoveCustomer:: clone() {
     return moveC;
 }
 std::string MoveCustomer :: toString() const{
-    std:string output = "MoveCustomer" + std::to_string(srcTable) + " " + std::to_string(dstTable)+ " " + std::to_string(id) + " ";
+    std:string output = "move " + std::to_string(srcTable) + " " + std::to_string(dstTable)+ " " + std::to_string(id) + " ";
     if( getStatus() == COMPLETED){
         output = output + "Completed";
     }
     if(getStatus() == ERROR){
         output = output + getErrorMsg();
     }
+    return output;
 
 }

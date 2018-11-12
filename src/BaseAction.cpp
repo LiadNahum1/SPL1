@@ -2,12 +2,12 @@
 // Created by USER on 11/5/2018.
 //
 #include "../include/Action.h"
-BaseAction::BaseAction():errorMsg("") {}
+BaseAction::BaseAction():errorMsg(""), status(PENDING) {}
 void BaseAction::complete() {status = COMPLETED; }
 void BaseAction::error(std::string errorMsg) {
     status = ERROR;
     this->errorMsg = errorMsg;
-    std::cout << errorMsg;
+    std::cout << errorMsg<<endl;
 }
 std::string BaseAction::getErrorMsg() const { return errorMsg;}
 ActionStatus BaseAction::getStatus() const {return status;}

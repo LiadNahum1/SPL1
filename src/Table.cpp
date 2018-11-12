@@ -70,20 +70,22 @@ Table& Table::operator=(Table &&other) {
 }
 void Table :: removeCustomer(int id) {
     //remove customer
-    for (int i = 0; i < customersList.size(); ++i) {
+    for (int i = 0; i < customersList.size(); i = i+1) {
         if (customersList.at(i)->getId() == id) {
-            //delete customersList.at(i);
             customersList.at(i) = nullptr;
             customersList.erase(customersList.begin() + i);
         }
     }
-    cout<<customersList.size()<<endl;
     //remove orders of this customer
-    for (int j = 0; j < orderList.size(); ++j) {
-        if(orderList.at(j).first == id) {
+    for (int j = orderList.size() - 1; j >=0; j=j-1) {
+        if (orderList.at(j).first == id) {
+            cout << orderList.at(j).first << endl;
             orderList.erase(orderList.begin() + j);
-            j = j - 1;
-       }
+        }
+    }
+    cout<<"orders sg:"<<endl;
+    for (int k = 0; k < orderList.size(); ++k) {
+        cout << orderList.at(k).second.getName()<<orderList.at(k).first<<endl;
     }
 
 }
@@ -101,14 +103,15 @@ std::vector<OrderPair>& Table :: getOrders(){ return orderList;}
 
 void Table :: order(const std::vector<Dish> &menu){
     vector<int>orders;
-    orderList.clear();
     for (int i = 0; i < customersList.size(); ++i) {
         orders = customersList.at(i)->order(menu); // id of orders of customer
         for (int j = 0; j < orders.size(); ++j) {
             for (int k = 0; k < menu.size(); ++k) {
-                if(orders.at(j) == menu.at(k).getId()){
+                if(orders.at(j) == menu.at(k).getId()) {
                     orderList.push_back(OrderPair(customersList.at(i)->getId(), menu.at(k)));
+                    std::cout << customersList.at(i)->getName() + " ordered " + menu.at(k).getName() << endl;
                 }
+
             }
 
         }

@@ -7,8 +7,8 @@
 #include <sstream>
 #include <string>
 #include <fstream>
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 
 using namespace std;
 
@@ -43,8 +43,8 @@ Restaurant::Restaurant(const std::string &configFilePath):open(false)
                     while (getline(file, line)) {
                         cout<<line<<endl;
                         DishType ty; //check if is the right way
-                        int firstCommaInd(line.find_first_of(","));
-                        int lastCommaInd(line.find_last_of(","));
+                        int firstCommaInd(line.find_first_of(','));
+                        int lastCommaInd(line.find_last_of(','));
                         string d_name(line.substr(0, firstCommaInd));
                         string d_type(line.substr(firstCommaInd + 1, lastCommaInd-firstCommaInd-1));
                         if (d_type == "VEG")
@@ -103,10 +103,8 @@ Restaurant & Restaurant ::operator=(const Restaurant &other){
         tables.clear();
         for (int j = 0; j < actionsLog.size(); ++j) {
             delete actionsLog.at(j);
-            delete actionsLog.at(j);
         }
         actionsLog.clear();
-
         for (int i = 0; i < other.getNumOfTables(); ++i) {
             tables.push_back(new Table( * other.tables.at(i)));
         }
@@ -150,14 +148,14 @@ void Restaurant::start() {
 
     std::string actionToExecute("");
     std::string action("");
-
+    int c_id(0);
     while(action != "closeall"){
         getline (cin, actionToExecute);
         BaseAction * act = nullptr;
         std::istringstream tokens (actionToExecute);
         tokens>> action ;
         int t_id;
-        int c_id(0);
+
         if(action == "open") {
             tokens >> t_id;
             vector<Customer *> customers;
@@ -177,9 +175,8 @@ void Restaurant::start() {
                         customers.push_back(new SpicyCustomer(c_name, c_id));
                     if (strategy.compare("chp") == 0)
                         customers.push_back(new CheapCustomer(c_name, c_id));
-                    if (strategy.compare("alc") == 0) {
+                    if (strategy.compare("alc") == 0)
                         customers.push_back(new AlchoholicCustomer(c_name, c_id));
-                    }
 
                     c_id = c_id + 1;
                 }
@@ -225,8 +222,11 @@ void Restaurant::start() {
         if(action == "restore"){
             act = new RestoreResturant();
         }
-        act->act(*this);
-        actionsLog.push_back(act);
+        if(action == "closeall") {
+            act = new CloseAll();
+        }
+            act->act(*this);
+            actionsLog.push_back(act);
     }
 
 }

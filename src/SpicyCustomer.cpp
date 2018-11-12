@@ -11,6 +11,7 @@ std::vector<int> SpicyCustomer :: order(const std::vector<Dish> &menu) {
     //the first time that the SpicyCustomer orders
     if(!orderOnce) {
        firstOrder(menu, orderId);
+       orderOnce = true;
     }
         //next times
     else{
@@ -56,7 +57,7 @@ void SpicyCustomer :: nextOrders(const std::vector<Dish> &menu, vector<int> &ord
                 id = menu[i].getId();
                 cheapest = menu[i].getPrice();
             } else {
-                if (menu[i].getPrice() > cheapest) {
+                if (menu[i].getPrice() < cheapest) {
                     id = menu[i].getId();
                     cheapest = menu[i].getPrice();
                 }

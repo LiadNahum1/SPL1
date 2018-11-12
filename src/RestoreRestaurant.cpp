@@ -4,12 +4,11 @@
 #include "../include/Action.h"
 #include "../include/Restaurant.h"
 extern Restaurant * backup;
-RestoreResturant::RestoreResturant() {}
 void RestoreResturant :: act(Restaurant &restaurant){
     if(backup == nullptr)
         error("No backup available");
     else {
-        restaurant = *backup; //copy operator
+        restaurant.operator=(*backup); //copy operator
         complete();
     }
 }

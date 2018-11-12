@@ -28,6 +28,8 @@ void PrintTableStatus  :: act(Restaurant &restaurant){
     for (int i = 0; i < orders.size(); ++i) {
         cout << orders.at(i).second.getName() + " " << orders.at(i).second.getPrice()<< "NIS "<< orders.at(i).first << endl;
     }
+    //print bill
+    cout<< "Current Bill: "<< t->getBill()<< "NIS"<<endl;
     complete();
 }
 BaseAction * PrintTableStatus:: clone() {
@@ -36,5 +38,5 @@ BaseAction * PrintTableStatus:: clone() {
     return tableStatus ;
 }
 std::string PrintTableStatus :: toString() const{
-    return "PrintTableStatus Completed" ;
+    return "status " + std::to_string(tableId)+ " Completed";
 }
