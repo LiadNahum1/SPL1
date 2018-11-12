@@ -27,11 +27,12 @@ BaseAction * Order:: clone() {
     return orderC;
 }
 std::string Order::toString() const {
-    std::string output = "order " + tableId;
+    std::string output = "order " + std::to_string(tableId)+ " ";
     if( getStatus() == COMPLETED){
         output = output + "Completed";
     }
     if(getStatus() == ERROR){
         output = output + getErrorMsg();
     }
+    return output;
 }

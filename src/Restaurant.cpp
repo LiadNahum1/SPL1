@@ -157,10 +157,10 @@ void Restaurant::start() {
         std::istringstream tokens (actionToExecute);
         tokens>> action ;
         int t_id;
+        int c_id(0);
         if(action == "open") {
             tokens >> t_id;
             vector<Customer *> customers;
-            int c_id(0);
             while (tokens) {
                 std::string c_details;
                 std::string c_name;
