@@ -11,7 +11,6 @@ using namespace std;
 
 MoveCustomer :: MoveCustomer(int src, int dst, int customerId): srcTable(src), dstTable(dst), id(customerId){}
 void MoveCustomer :: act(Restaurant &restaurant){
-    cout<<srcTable<<dstTable<<id<<endl;
     Table * tableSrc = restaurant.getTable(srcTable);
     Table * tableDst = restaurant.getTable(dstTable);
     if((tableSrc == nullptr | tableDst == nullptr) ||(!tableSrc->isOpen() | !tableDst->isOpen())){

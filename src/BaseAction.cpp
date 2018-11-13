@@ -7,7 +7,7 @@ void BaseAction::complete() {status = COMPLETED; }
 void BaseAction::error(std::string errorMsg) {
     status = ERROR;
     this->errorMsg = "Error: " + errorMsg;
-    std::cout << errorMsg<<endl;
+    std::cout << this->errorMsg<<endl;
 }
 std::string BaseAction::getErrorMsg() const { return errorMsg;}
 ActionStatus BaseAction::getStatus() const {return status;}

@@ -29,19 +29,16 @@ Restaurant::Restaurant(const std::string &configFilePath):open(false)
                 if (i == 1) {// number of tables
 
                     getline(file, line);
-                    //cout<<line <<endl;
                     numTables = atoi(line.c_str());
                     i = i + 1;
                 }
                 else if (i == 2) { //tables description
                     getline(file, line);
-                    //cout<<line<<endl;
                     openTable(line, numTables);
                     i = i + 1;
                 }
                 else if (i == 3) {//Menu
                     while (getline(file, line)) {
-                        cout<<line<<endl;
                         DishType ty; //check if is the right way
                         int firstCommaInd(line.find_first_of(','));
                         int lastCommaInd(line.find_last_of(','));

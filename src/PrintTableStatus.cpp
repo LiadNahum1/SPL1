@@ -29,7 +29,7 @@ void PrintTableStatus  :: act(Restaurant &restaurant){
         cout<< "Current Bill: "<< t->getBill()<< "NIS"<<endl;
     }
     else
-        cout<< "close"<< endl ;
+        cout<< "closed"<< endl ;
 
     complete();
 }
