@@ -21,7 +21,7 @@ Table::Table(const Table &other): open(other.open),capacity(other.capacity),orde
         customersList.push_back(other.customersList.at(i)->clone());
     }
 }
-
+//assignment operator
 Table& Table::operator=(const Table &other)   {
     if(this != &other) {
         open = other.open;
@@ -38,6 +38,7 @@ Table& Table::operator=(const Table &other)   {
     }
     return *this;
 }
+//destractor
 Table::~Table() {
     for(int i = 0; i< customersList.size() ; i++) {
         delete(customersList.at(i));
@@ -46,10 +47,12 @@ Table::~Table() {
     orderList.clear();
     customersList.clear();
 }
+//move constractor
 Table::Table(Table &&other) : open(other.open),capacity(other.capacity),orderList(other.orderList),customersList(other.customersList){
     other.getCustomers().clear();
 
 }
+//move operator
 Table& Table::operator=(Table &&other) {
     if(this != &other) {
         for (int i = 0; i < customersList.size(); i++) {

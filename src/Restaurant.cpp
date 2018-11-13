@@ -152,6 +152,7 @@ void Restaurant::start() {
     std::string actionToExecute("");
     std::string action("");
     int c_id(0);
+    //ask for actions from the user
     while(action != "closeall"){
         getline (cin, actionToExecute);
         BaseAction * act = nullptr;
@@ -167,7 +168,7 @@ void Restaurant::start() {
                 std::string c_name;
                 std::string strategy;
                 tokens >> c_details;
-
+                //creates the customers
                 if (!c_details.empty()) {
                     c_name = c_details.substr(0, c_details.find(","));
                     strategy = c_details.substr(c_details.find(",") + 1);
