@@ -13,13 +13,14 @@ void RestoreResturant :: act(Restaurant &restaurant){
     }
 }
 std::string RestoreResturant:: toString() const{
-    std::string output = "restore";
+    std::string output = "restore ";
     if( getStatus() == COMPLETED){
         output = output + "Completed";
     }
     if(getStatus() == ERROR){
         output = output + getErrorMsg();
     }
+    return output;
 }
 BaseAction * RestoreResturant:: clone() {
     BaseAction * restore = new RestoreResturant();

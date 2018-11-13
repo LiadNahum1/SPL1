@@ -6,7 +6,7 @@
 
 PrintActionsLog::PrintActionsLog() {}
 void PrintActionsLog::act(Restaurant &restaurant) {
-    std::vector<BaseAction*> actions = restaurant.getActionsLog(); //should it be refrens TODO
+    std::vector<BaseAction*> actions = restaurant.getActionsLog();
     for (int i = 0; i < actions.size(); ++i) {
         std::cout << actions.at(i)->toString()<< endl;
     }

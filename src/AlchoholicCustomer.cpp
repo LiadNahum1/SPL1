@@ -50,6 +50,7 @@ std::vector<int> AlchoholicCustomer :: order(const std::vector<Dish> &menu){
 Customer* AlchoholicCustomer::clone() {
     AlchoholicCustomer *al = new AlchoholicCustomer(this->getName(),this->getId());
     al->prevPrice = this->prevPrice;
+    al->prevId = this->prevId;
     return al;
 }
 std::string AlchoholicCustomer :: toString() const{

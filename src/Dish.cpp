@@ -7,8 +7,7 @@
 Dish::Dish(int d_id ,std::string d_name , int d_price ,DishType d_type): id(d_id), name(d_name), price(d_price), type(d_type){}
 Dish & Dish :: operator=(const Dish &other){
     if(this != &other) {
-        *this = *(new Dish(other.getId(), other.getName(), other.getPrice(), other.getType()));
-        //*this = dish;
+        *this = Dish(other.getId(), other.getName(), other.getPrice(), other.getType());
     }
     return *this;
 }

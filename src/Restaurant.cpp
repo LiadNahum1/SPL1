@@ -96,7 +96,10 @@ Restaurant :: Restaurant(const Restaurant & other) : open(other.open), menu(othe
 Restaurant & Restaurant ::operator=(const Restaurant &other){
     if(this != &other){
         open = other.open;
-        menu = other.menu;
+        menu.clear();
+        for (int k = 0; k <other.menu.size() ; ++k) {
+            menu.push_back(Dish(other.menu.at(k).getId(),other.menu.at(k).getName(), other.menu.at(k).getPrice(), other.menu.at(k).getType()));
+        }
         for (int i = 0; i < tables.size(); ++i) {
             delete tables.at(i);
         }
@@ -109,7 +112,7 @@ Restaurant & Restaurant ::operator=(const Restaurant &other){
             tables.push_back(new Table( * other.tables.at(i)));
         }
         for (int i = 0; i < other.getActionsLog().size(); ++i) {
-            actionsLog.push_back(other.getActionsLog().at(i)-> clone()); //TODO
+            actionsLog.push_back(other.getActionsLog().at(i)-> clone());
         }
     }
     return *this;
@@ -123,7 +126,10 @@ Restaurant :: Restaurant(Restaurant && other): open(other.open), menu(other.menu
 Restaurant & Restaurant :: operator=(Restaurant && other){
     if(this != &other){
         open = other.open;
-        menu = other.menu;
+        menu.clear();
+        for (int k = 0; k <other.menu.size() ; ++k) {
+            menu.push_back(Dish(other.menu.at(k).getId(),other.menu.at(k).getName(), other.menu.at(k).getPrice(), other.menu.at(k).getType()));
+        }
         other.menu.clear();
         for (int i = 0; i < tables.size(); ++i) {
             delete tables.at(i);
@@ -168,16 +174,16 @@ void Restaurant::start() {
                 if (!c_details.empty()) {
                     c_name = c_details.substr(0, c_details.find(","));
                     strategy = c_details.substr(c_details.find(",") + 1);
-
+                    Customer * customer;
                     if (strategy.compare("veg") == 0)
-                        customers.push_back(new VegetarianCustomer(c_name, c_id));
-                    if (strategy.compare("spc") == 0)
-                        customers.push_back(new SpicyCustomer(c_name, c_id));
-                    if (strategy.compare("chp") == 0)
-                        customers.push_back(new CheapCustomer(c_name, c_id));
-                    if (strategy.compare("alc") == 0)
-                        customers.push_back(new AlchoholicCustomer(c_name, c_id));
-
+                        customer = new VegetarianCustomer(c_name, c_id);
+                    else if (strategy.compare("spc") == 0)
+                        customer = new SpicyCustomer(c_name, c_id);
+                    else if (strategy.compare("chp") == 0)
+                        customer = new CheapCustomer(c_name, c_id);
+                    else
+                        customer = new AlchoholicCustomer(c_name, c_id);
+                    customers.push_back(customer);
                     c_id = c_id + 1;
                 }
 
@@ -225,8 +231,10 @@ void Restaurant::start() {
         if(action == "closeall") {
             act = new CloseAll();
         }
+        if(act != nullptr) {
             act->act(*this);
             actionsLog.push_back(act);
+        }
     }
 
 }

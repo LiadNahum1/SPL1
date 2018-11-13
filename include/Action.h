@@ -22,6 +22,7 @@ public:
     ActionStatus getStatus() const;
     virtual void act(Restaurant& restaurant)=0;
     virtual std::string toString() const=0;
+    virtual ~BaseAction();
     virtual BaseAction * clone() = 0;
     void CloneBase(std::string errorMsg, ActionStatus status);
 protected:
@@ -34,15 +35,18 @@ private:
 };
 
 
-class OpenTable : public BaseAction { //dane sholud i add error message in to string? TODO
+class OpenTable : public BaseAction {
 public:
     OpenTable(int id, std::vector<Customer *> &customersList);
     virtual void act(Restaurant &restaurant);
     virtual std::string toString() const;
     virtual BaseAction * clone();
+    virtual ~OpenTable();
+    OpenTable(const OpenTable &other);
+    OpenTable(OpenTable &&other);
 private:
     const int tableId;
-    const std::vector<Customer *> customers;
+     std::vector<Customer *> customers;
 };
 
 

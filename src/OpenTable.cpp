@@ -7,8 +7,25 @@
 #include "../include/Restaurant.h"
 
 using namespace std;
-OpenTable::OpenTable(int id, std::vector<Customer *> &customersList) : tableId(id),customers(customersList){
-
+OpenTable::OpenTable(int id, std::vector<Customer *> &customersList) : tableId(id), customers(customersList){
+}
+//destructor
+OpenTable ::~OpenTable() {
+   for (int i = 0; i < customers.size(); ++i) {
+       delete customers.at(i);
+       customers.at(i) = nullptr;
+   }
+   customers.clear();
+}
+//copy constractor
+OpenTable::OpenTable(const OpenTable &other): tableId(other.tableId) {
+    for (int i = 0; i < other.customers.size(); ++i) {
+        this->customers.push_back(other.customers.at(i)->clone());
+    }
+}
+//move constractor
+OpenTable::OpenTable(OpenTable &&other):tableId(other.tableId),customers(other.customers) {
+    other.customers.clear();
 }
 
 void OpenTable::act(Restaurant &restaurant) {
