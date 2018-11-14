@@ -11,15 +11,15 @@ OpenTable::OpenTable(int id, std::vector<Customer *> &customersList) : tableId(i
 }
 //destructor
 OpenTable ::~OpenTable() {
-   for (int i = 0; i < customers.size(); ++i) {
+   for (int i = 0; i < (int)customers.size(); ++i) {
        delete customers.at(i);
        customers.at(i) = nullptr;
    }
    customers.clear();
 }
 //copy constractor
-OpenTable::OpenTable(const OpenTable &other): tableId(other.tableId) {
-    for (int i = 0; i < other.customers.size(); ++i) {
+OpenTable::OpenTable(const OpenTable &other): tableId(other.tableId), customers() {
+    for (int i = 0; i < (int)other.customers.size(); ++i) {
         this->customers.push_back(other.customers.at(i)->clone());
     }
 }
@@ -34,7 +34,7 @@ void OpenTable::act(Restaurant &restaurant) {
         error("Table does not exist or is already open");
     }
     else{
-        for(int i = 0;i<customers.size();i++){
+        for(int i = 0;i<(int)customers.size();i++){
             t->addCustomer(customers[i]);
         }
         t->openTable();
@@ -45,7 +45,7 @@ void OpenTable::act(Restaurant &restaurant) {
 
 BaseAction * OpenTable:: clone() {
     vector<Customer *> customersNew;
-    for (int i = 0; i < customers.size(); ++i) {
+    for (int i = 0; i < (int)customers.size(); ++i) {
         customersNew.push_back(customers.at(i)->clone());
     }
     BaseAction * openC =  new OpenTable(tableId, customersNew);
@@ -56,7 +56,7 @@ BaseAction * OpenTable:: clone() {
 std::string OpenTable::toString() const {
     std::string output = "open ";
     output = output + std::to_string(tableId) + " ";
-    for(int i = 0; i<customers.size(); i++){
+    for(int i = 0; i<(int)customers.size(); i++){
         output = output + customers[i]->toString() + " ";
     }
     if( getStatus() == COMPLETED){

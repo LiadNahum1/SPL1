@@ -9,7 +9,7 @@
 PrintMenu :: PrintMenu(){}
 void PrintMenu :: act(Restaurant &restaurant) {
     vector<Dish> &menu = restaurant.getMenu();
-    for (int i = 0; i < menu.size() ; ++i) {
+    for (int i = 0; i < (int)menu.size() ; ++i) {
         cout << menu.at(i).getName() + " " ;
         cout << menu.at(i).getType() + " " ;
         cout << menu.at(i).getPrice() + "NIS" << endl;

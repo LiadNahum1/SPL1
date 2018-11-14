@@ -32,7 +32,7 @@ BaseAction * Close:: clone() {
 }
 
 std::string Close :: toString() const{
-    std:string output = "close " + std::to_string(tableId) + " ";
+    string output = "close " + to_string(tableId) + " ";
     if( getStatus() == COMPLETED){
         output = output + "Completed";
     }

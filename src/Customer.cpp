@@ -10,12 +10,6 @@ using namespace std;
 Customer :: Customer(string c_name, int c_id): name(c_name), id(c_id){}
 std::string Customer :: getName() const{return name;};
 int Customer :: getId() const{return id;}
-//Customer & Customer ::operator=(const Customer &other){
-//    if(this != &other){
-//        *this = *(this->clone());
-//    }
-//    else
-//        return *this;
-//}
+Customer::~Customer() {}
 
 

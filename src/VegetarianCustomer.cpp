@@ -14,7 +14,7 @@ std::vector<int> VegetarianCustomer :: order(const std::vector<Dish> &menu){
     //vegetarian dish with the smallest id in the menu
     int minId(-1);
     bool findFirstVeg(false);
-    for (int i = 0; i < menu.size(); ++i) {
+    for (int i = 0; i < (int)menu.size(); ++i) {
         if (menu.at(i).getType() == VEG) {
             if (!findFirstVeg) {
                 findFirstVeg = true;
@@ -32,7 +32,7 @@ std::vector<int> VegetarianCustomer :: order(const std::vector<Dish> &menu){
         int id(-1);
         int expensive(0);
         bool findFirstBev(false);
-        for (int i = 0; i < menu.size(); ++i) {
+        for (int i = 0; i < (int)menu.size(); ++i) {
             if (menu.at(i).getType() == BVG) {
                 if (!findFirstBev) {
                     findFirstBev = true;
@@ -43,7 +43,7 @@ std::vector<int> VegetarianCustomer :: order(const std::vector<Dish> &menu){
                         id = menu.at(i).getId();
                         expensive = menu.at(i).getPrice();
                     }
-                    if (menu.at(i).getPrice() == expensive & menu.at(i).getId() < id) {
+                    if ((menu.at(i).getPrice() == expensive) & (menu.at(i).getId() < id)) {
                         id = menu.at(i).getId();
                         expensive = menu.at(i).getPrice();
                     }

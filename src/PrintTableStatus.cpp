@@ -16,13 +16,13 @@ void PrintTableStatus  :: act(Restaurant &restaurant){
         //customers
         cout<< "Customers:"<< endl;
         vector<Customer *>& customers = t->getCustomers();
-        for (int i = 0; i < customers.size(); ++i) {
+        for (int i = 0; i < (int)customers.size(); ++i) {
             cout << std::to_string(customers.at(i)->getId()) + " " + customers.at(i)->getName()<< endl;
         }
         //orders
         cout<< "Orders:"<< endl;
         vector<OrderPair>& orders = t->getOrders();
-        for (int i = 0; i < orders.size(); ++i) {
+        for (int i = 0; i < (int)orders.size(); ++i) {
             cout << orders.at(i).second.getName() + " " << orders.at(i).second.getPrice()<< "NIS "<< orders.at(i).first << endl;
         }
         //print bill

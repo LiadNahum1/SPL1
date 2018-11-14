@@ -12,7 +12,7 @@ std::vector<int> CheapCustomer :: order(const std::vector<Dish> &menu) {
     if (!orderOnce) {
         int cheapestIdOrder(menu[0].getId());
         int cheapestPrice(menu[0].getPrice());
-        for (int i = 0; i < menu.size(); ++i) {
+        for (int i = 0; i < (int)menu.size(); ++i) {
             if (menu[i].getPrice() < cheapestPrice) {
                 cheapestIdOrder = menu[i].getId();
                 cheapestPrice = menu[i].getPrice();

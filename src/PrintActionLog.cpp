@@ -7,7 +7,7 @@
 PrintActionsLog::PrintActionsLog() {}
 void PrintActionsLog::act(Restaurant &restaurant) {
     std::vector<BaseAction*> actions = restaurant.getActionsLog();
-    for (int i = 0; i < actions.size(); ++i) {
+    for (int i = 0; i < (int)actions.size(); ++i) {
         std::cout << actions.at(i)->toString()<< endl;
     }
     complete();

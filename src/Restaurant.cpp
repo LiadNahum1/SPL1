@@ -13,7 +13,7 @@
 using namespace std;
 
 
-Restaurant::Restaurant(const std::string &configFilePath):open(false)
+Restaurant::Restaurant(const std::string &configFilePath):open(false), tables(), menu(),actionsLog()
 {
     int numTables(0);
     int dishNum(0);
@@ -68,22 +68,22 @@ Restaurant::Restaurant(const std::string &configFilePath):open(false)
     file.close();
 }
 //copy constructor
-Restaurant :: Restaurant(const Restaurant & other) : open(other.open), menu(other.menu) {
+Restaurant :: Restaurant(const Restaurant & other) : open(other.open), tables(), menu(other.menu), actionsLog() {
     for (int i = 0; i < other.getNumOfTables(); ++i) {
         tables.push_back(new Table(*other.tables.at(i)));
     }
-    for (int i = 0; i < other.getActionsLog().size(); ++i) {
+    for (int i = 0; i < (int)other.getActionsLog().size(); ++i) {
         actionsLog.push_back(other.getActionsLog().at(i)-> clone());
     }
 }
 //destruction
  Restaurant :: ~Restaurant(){
     menu.clear();
-     for (int i = 0; i < tables.size(); ++i) {
+     for (int i = 0; i < (int)tables.size(); ++i) {
          delete tables.at(i);
      }
      tables.clear();
-     for (int j = 0; j < actionsLog.size(); ++j) {
+     for (int j = 0; j < (int)actionsLog.size(); ++j) {
          delete actionsLog.at(j);
      }
      actionsLog.clear();
@@ -94,28 +94,28 @@ Restaurant & Restaurant ::operator=(const Restaurant &other){
     if(this != &other){
         open = other.open;
         menu.clear();
-        for (int k = 0; k <other.menu.size() ; ++k) {
+        for (int k = 0; k <(int)other.menu.size() ; ++k) {
             menu.push_back(Dish(other.menu.at(k).getId(),other.menu.at(k).getName(), other.menu.at(k).getPrice(), other.menu.at(k).getType()));
         }
-        for (int i = 0; i < tables.size(); ++i) {
+        for (int i = 0; i < (int)tables.size(); ++i) {
             delete tables.at(i);
         }
         tables.clear();
-        for (int j = 0; j < actionsLog.size(); ++j) {
+        for (int j = 0; j < (int)actionsLog.size(); ++j) {
             delete actionsLog.at(j);
         }
         actionsLog.clear();
         for (int i = 0; i < other.getNumOfTables(); ++i) {
             tables.push_back(new Table( * other.tables.at(i)));
         }
-        for (int i = 0; i < other.getActionsLog().size(); ++i) {
+        for (int i = 0; i < (int)other.getActionsLog().size(); ++i) {
             actionsLog.push_back(other.getActionsLog().at(i)-> clone());
         }
     }
     return *this;
 }
 //move constructor
-Restaurant :: Restaurant(Restaurant && other): open(other.open), menu(other.menu), tables(other.tables), actionsLog(other.actionsLog){
+Restaurant :: Restaurant(Restaurant && other): open(other.open),tables(other.tables), menu(other.menu), actionsLog(other.actionsLog){
     other.tables.clear();
     other.actionsLog.clear();
 }
@@ -124,18 +124,18 @@ Restaurant & Restaurant :: operator=(Restaurant && other){
     if(this != &other){
         open = other.open;
         menu.clear();
-        for (int k = 0; k <other.menu.size() ; ++k) {
+        for (int k = 0; k <(int)other.menu.size() ; ++k) {
             menu.push_back(Dish(other.menu.at(k).getId(),other.menu.at(k).getName(), other.menu.at(k).getPrice(), other.menu.at(k).getType()));
         }
         other.menu.clear();
-        for (int i = 0; i < tables.size(); ++i) {
+        for (int i = 0; i < (int)tables.size(); ++i) {
             delete tables.at(i);
         }
         tables.clear();
         tables = other.tables;
         other.tables.clear();
 
-        for (int j = 0; j < actionsLog.size(); ++j) {
+        for (int j = 0; j < (int)actionsLog.size(); ++j) {
             delete actionsLog.at(j);
         }
         actionsLog.clear();
@@ -188,6 +188,12 @@ void Restaurant::start() {
             }
 
             act = new OpenTable(t_id, customers);
+            act->act(*this);
+            actionsLog.push_back(act);
+            if(act->getStatus() == ERROR){
+                c_id = c_id - (int)customers.size();
+            }
+
         }
         if(action == "order"){
             tokens >> t_id;
@@ -203,6 +209,7 @@ void Restaurant::start() {
             tokens >> c_id;
 
             act = new MoveCustomer(origin_id, dst_id, c_id);
+
         }
 
         if(action == "close"){
@@ -229,7 +236,7 @@ void Restaurant::start() {
         if(action == "closeall") {
             act = new CloseAll();
         }
-        if(act != nullptr) {
+        if((act != nullptr) & (action != "open")) {
             act->act(*this);
             actionsLog.push_back(act);
         }
@@ -240,7 +247,7 @@ void Restaurant::openTable(std::string input , int numTables) { //dane
     int commaInd(0);
     int beginInd(0);
     int capacity(0);
-    for (int i = 0; i < input.length(); ++i) {
+    for (int i = 0; i < (int)input.length(); ++i) {
         if(input[i] == ','){
             commaInd = i;
             capacity = atoi(input.substr(beginInd, commaInd-beginInd).c_str());
